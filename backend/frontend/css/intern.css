@@ -1,0 +1,82 @@
+
+/* Card Styling */
+.course-card {
+    border: none;
+    border-radius: 20px;
+    overflow: hidden;
+    transition: 0.4s ease;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    background: #fff;
+}
+
+/* Hover Effect */
+.course-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+}
+
+/* Image Styling */
+.course-img {
+    height: 120px;
+    object-fit: cover;
+}
+
+/* Title */
+.course-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--brand-blue-dark);
+}
+
+/* Description */
+.course-desc {
+    font-size: 11px;
+    color: #555;
+}
+
+/* Badge Styling */
+.tech-badge {
+    background: linear-gradient(45deg, var(--brand-blue-dark),#046ef0);
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 20px;
+    font-size: 8px;
+    margin: 3px;
+    display: inline-block;
+}
+
+/* Duration */
+.duration {
+       font-size: 12px;
+    font-weight: 600;
+    color: #198754;
+}
+
+/* Button */
+.enroll-btn {
+    font-size: 16px;
+    border-radius: 30px;
+    transition: 0.3s;
+}
+
+.enroll-btn:hover {
+    background-color: var(--brand-blue-dark);
+    color: #fff;
+}
+
+
+
+
+.custom-icon {
+  margin: 0 auto;
+   width: 80px;
+   height: 80px;
+   background-color: var(--brand-blue-dark);
+   border-radius: 50%;
+   font-size: 3rem;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+ }
+
+

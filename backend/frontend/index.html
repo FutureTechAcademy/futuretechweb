@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Future Tech Academy | Home</title>
+  <link rel="icon" href="/images/logo.png" type="icon/image">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/index.css">
+</head>
+
+<body data-page="home">
+  <nav class="navbar navbar-expand-lg fixed-top custom-nav">
+    <div class="container">
+      <a href="/"><img src="/images/logo.png" width="40"></a>
+      <a class="navbar-brand text-uppercase" href="index.html" style="text-shadow: 4px 4px 4px rgb(7, 7, 8);">Future
+        Tech Academy</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
+        aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="mainNav">
+        <ul class="navbar-nav ms-auto gap-lg-1">
+          <li class="nav-item"><a class="nav-link" data-page-link="home" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" data-page-link="about" href="about.html">About</a></li>
+          <li class="nav-item"><a class="nav-link" data-page-link="courses" href="courses.html">Courses</a></li>
+          <li class="nav-item"><a class="nav-link" data-page-link="trainers" href="trainers.html">Trainers</a></li>
+          <li class="nav-item"><a class="nav-link" data-page-link="blogs" href="events.html">Events</a></li>
+          <li class="nav-item"><a class="nav-link" data-page-link="projects" href="projects.html">Projects</a></li>
+          <li class="nav-item"><a class="nav-link" data-page-link="contact" href="contact.html">Contact</a></li>
+          <li class="nav-item"><a class="nav-link" data-page-link="intern" href="intern.html">Internship</a></li>
+          <li class="nav-item"><a class="nav-link" data-page-link="admin" href="admin.html">Admin</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Alert Box -->
+  <div id="customAlert" class="alert-box">
+    <div class="alert-content">
+      <span id="alertMessage">Success Message</span>
+      <button onclick="closeAlert()">OK</button>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal fade" data-bs-backdrop="static" id="enq" tabindex="1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title text-uppercase" style="color: var(--brand-blue-dark);">Send Enquiry</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+
+          <div class="row g-3">
+            <div class="col-md-12"><input class="form-control" id="Name" type="text" placeholder="Full Name" required />
+            </div>
+            <div class="col-md-12"><input class="form-control" id="Email" type="email" placeholder="Email Address"
+                required /></div>
+            <div class="col-md-12"><input class="form-control" id="Phone" type="tel" placeholder="Phone Number"
+                required /></div>
+            <div class="col-md-12">
+              <select class="form-select" required id="courses">
+                <option value="">Select Course Interest</option>
+                <option>Web Development</option>
+                <option>Data and AI</option>
+                <option>Cloud and DevOps</option>
+                <option>UI UX Design</option>
+                <option>Cyber Security</option>
+              </select>
+            </div>
+            <p class="valid">* All fields are required</p>
+            <div class="col-md-12"><button class="btn btn-brand" style="width: 100%;" type="submit"
+                onclick="sendEnq()">Submit Enquiry</button></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <!-- Modal Button -->
+  <button type="button" class="btn btn-brand enq-btn vertical-btn text-uppercase" data-bs-toggle="modal"
+    data-bs-target="#enq">
+    Enquire Now
+  </button>
+  <!-- Contact Button -->
+  <div class="cont-btn">
+    <a href="tel:+918248539239" class="m-2">
+      <i class="bi bi-telephone-fill"></i>
+    </a>
+    <a href="https://WA.me/918248539239" class="m-2">
+      <i class="bi bi-whatsapp"></i>
+    </a>
+  </div>
+
+
+
+  <header class="hero-home">
+    <div id="homeSlider" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="4500">
+      <div class="carousel-indicators">
+
+      </div>
+      <div class="carousel-inner">
+
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#homeSlider" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#homeSlider" data-bs-slide="next">
+        <span class="carousel-control-next-icon"></span>
+      </button>
+    </div>
+  </header>
+
+  <section class="section-pad">
+    <div class="container">
+      <h2 class="section-title text-center">OUR RANK</h2>
+      <div class="row g-4">
+        <div class="col-md-6 col-lg-3 reveal-up">
+          <div class="stat-card card">
+            <div class="card-body text-center">
+              <p class="metric mb-1">2000+</p>
+              <p class="mb-0">Students Trained</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3 reveal-up">
+          <div class="stat-card card">
+            <div class="card-body text-center">
+              <p class="metric mb-1">75+</p>
+              <p class="mb-0">Industry Courses</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3 reveal-up">
+          <div class="stat-card card">
+            <div class="card-body text-center">
+              <p class="metric mb-1">1500+</p>
+              <p class="mb-0">Internships</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3 reveal-up">
+          <div class="stat-card card">
+            <div class="card-body text-center">
+              <p class="metric mb-1">5000+</p>
+              <p class="mb-0">Career Placements</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-pad pt-0">
+    <div class="container">
+      <div class="row align-items-center g-4">
+        <div class="col-lg-6 reveal-left">
+          <h2 class="section-title">Master in-demand IT, Design, and Commerce skills with expert training and real-time
+            projects.</h2>
+          <p class="section-lead">Join Future Tech Academy and start your journey in Software Development, Graphic
+            Design, Animation, Accounting, and more. Learn from industry experts and gain practical experience with
+            placement support.</p>
+          <ul class="list-check">
+            <li>Industry Expert Training</li>
+            <li>Hands-on Real Projects</li>
+            <li>100% Placement Guidance</li>
+            <li>Affordable Course Fees</li>
+          </ul>
+        </div>
+        <div class="col-lg-6 reveal-right">
+          <img src="/images/hero_img.png" class="img-fluid rounded-4 shadow" alt="Learning session" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-pad" style="background: #eaf3ff;">
+    <div class="container">
+      <h2 class="section-title text-center reveal-up">Top Trending Courses At Future Tech Academy</h2>
+      <p class="section-lead text-center reveal-up">Choose from beginner and advanced tracks based on your goals.</p>
+      <div class="row g-4" id="trendingCourseDiv">
+
+      </div>
+    </div>
+  </section>
+
+
+
+  <section class="section-pad pt-0">
+    <div class="container">
+      <div class="row align-items-center g-4">
+        <div class="col-lg-6 reveal-left">
+          <h2 class="section-title">Build Your Future with Confidence</h2>
+          <h5 style="color:var(--brand-yellow-dark);">Quality Learning Environment</h5>
+          <p class="section-lead">Experience a structured and supportive learning atmosphere designed to enhance
+            understanding, confidence, and continuous improvement.</p>
+          <h5 style="color:var(--brand-yellow-dark);">Growth & Career Support</h5>
+          <p class="section-lead">Our focus is not just learning, but helping you move forward with clarity, confidence,
+            and the right opportunities for your future.</p>
+          <h5 style="color:var(--brand-yellow-dark);">Strong Placement Guidance</h5>
+          <p>From preparation to opportunity, we provide complete support to help you take the next step in your
+            professional journey.</p>
+        </div>
+        <div class="col-lg-6 reveal-right">
+          <img src="/images/hero1.png" class="img-fluid rounded-4 shadow " alt="Learning session" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <div class="container my-5 reveal-up">
+    <h2 class="text-center section-title mb-4">⭐ Our Google Reviews</h2>
+    <div class="reviewBox" id="reviewBox">
+    </div>
+
+  </div>
+
+  <section class="section-pad reveal-up">
+    <div class="container">
+      <h2 class="section-title reveal-up">Top Hiring Companies</h2>
+      <div class="row">
+        <div class="col-md-3 d-flex flex-column align-items-center gap-3 mt-2 reveal-up">
+          <img class="logo-box"
+            src="https://upload.wikimedia.org/wikipedia/commons/0/0e/Tata_Consultancy_Services_old_logo.svg" alt="">
+          <img class="logo-box" src="https://upload.wikimedia.org/wikipedia/commons/e/e8/Infosys_Technologies_logo.svg"
+            alt="">
+          <img class="logo-box"
+            src="https://upload.wikimedia.org/wikipedia/commons/a/a0/Wipro_Primary_Logo_Color_RGB.svg" alt="">
+        </div>
+        <div class="col-md-3 d-flex flex-column align-items-center gap-3 mt-2 reveal-up">
+          <img class="logo-box" src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="">
+          <img class="logo-box" src="https://upload.wikimedia.org/wikipedia/commons/f/f3/IBM_Logo_1967-1972.svg" alt="">
+          <img class="logo-box" src="https://upload.wikimedia.org/wikipedia/commons/9/96/Microsoft_logo_%282012%29.svg"
+            alt="">
+        </div>
+        <div class="col-md-3 d-flex flex-column align-items-center gap-3 mt-2 reveal-up">
+          <img class="logo-box" src="https://upload.wikimedia.org/wikipedia/commons/9/90/HCLTech.svg" alt="">
+          <img class="logo-box" src="https://upload.wikimedia.org/wikipedia/commons/3/30/ZOHO_logo_2023.svg" alt="">
+          <img class="logo-box" src="https://upload.wikimedia.org/wikipedia/commons/1/1c/Accenture_logo.svg" alt="">
+        </div>
+        <div class="col-md-3 d-flex flex-column align-items-center gap-3 mt-2 reveal-up">
+          <img class="logo-box" src="https://upload.wikimedia.org/wikipedia/commons/a/af/Ideo_logo.svg" alt="">
+          <img class="logo-box" src="https://upload.wikimedia.org/wikipedia/commons/4/4c/Frog_Design_logo.svg" alt="">
+          <img class="logo-box" src="https://upload.wikimedia.org/wikipedia/commons/1/13/WPP_2020_logo.svg" alt="">
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+
+  <footer class="footer">
+
+    <div class="row mx-auto">
+      <div class="col-md-3 p-4">
+        <h4>Location</h4>
+        <address>
+          4/8 Anandham Complex,<br>
+          Arunachalapuram Street,<br>
+          Tenkasi- 627 811,Tamil Nadu, India.
+        </address>
+        <a href="mailto:futuretechtk@gmail.com" class="btn btn-primary my-2 w-100" style="text-align: left;"><i
+            class="bi bi-envelope-at-fill"></i> &nbsp;futuretechtk@gmail.com</a>
+        <a href="tel:+918248539239" class="btn btn-primary my-2 w-100" style="text-align: left;"><i
+            class="bi bi-telephone-fill"></i> &nbsp;+91 82485 39239</a>
+        <div class="mt-2">
+          <a href="https://www.instagram.com/future_techacademy" target="_blank" class="iconBtn"><i
+              class="bi bi-instagram"></i></a>
+          <a href="https://www.youtube.com/@Future_TechAcademy" target="_blank" class="iconBtn"><i
+              class="bi bi-youtube"></i></a>
+          <a href="https://WA.me/918248539239" target="_blank" class="iconBtn"><i class="bi bi-whatsapp"></i></a>
+          <a href="https://share.google/tF83pZyXavi6IvTWW" target="_blank" class="iconBtn"><i
+              class="bi bi-browser-chrome"></i></a>
+          <a href="https://maps.app.goo.gl/pDcx5zfGsuyQLukF6" target="_blank" class="iconBtn"><i
+              class="bi bi-geo-alt"></i></a>
+        </div>
+      </div>
+      <div class="col-md-3 p-4">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="/"><i class="bi bi-arrow-right-circle-fill"></i> &nbsp;Home</a></li>
+          <li><a href="/about.html"><i class="bi bi-arrow-right-circle-fill"></i> &nbsp;About</a></li>
+          <li><a href="/courses.html"><i class="bi bi-arrow-right-circle-fill"></i> &nbsp;Courses</a></li>
+          <li><a href="/trainers.html"><i class="bi bi-arrow-right-circle-fill"></i> &nbsp;Trainers</a></li>
+          <li><a href="/events.html"><i class="bi bi-arrow-right-circle-fill"></i> &nbsp;Events</a></li>
+          <li><a href="/projects.html"><i class="bi bi-arrow-right-circle-fill"></i> &nbsp;Projects</a></li>
+          <li><a href="/contact.html"><i class="bi bi-arrow-right-circle-fill"></i> &nbsp;Contact</a></li>
+          <li><a href="/intern.html"><i class="bi bi-arrow-right-circle-fill"></i> &nbsp;Internship</a></li>
+        </ul>
+      </div>
+      <div class="col-md-3 p-4">
+        <h4>Trending Courses</h4>
+        <ul id="footer_TrendingCourse">
+          <li><a href=""><i class="bi bi-arrow-right-circle-fill"></i></a></li>
+        </ul>
+      </div>
+      <div class="col-md-3 p-4">
+        <h4>Technologies Offered</h4>
+        <ul>
+          <li><a href="/courses.html"><i class="bi bi-arrow-right-circle-fill"></i> IT & Software</a></li>
+          <li><a href="/courses.html"><i class="bi bi-arrow-right-circle-fill"></i> Design & Multimedia</a></li>
+          <li><a href="/courses.html"><i class="bi bi-arrow-right-circle-fill"></i> Commerce & Accounting</a>
+          </li>
+          <li><a href="/courses.html"><i class="bi bi-arrow-right-circle-fill"></i> Electrical & Electronics</a>
+          </li>
+          <li><a href="/courses.html"><i class="bi bi-arrow-right-circle-fill"></i> Mechanical Engineering</a></li>
+          <li><a href="/courses.html"><i class="bi bi-arrow-right-circle-fill"></i> Civil Engineering</a></li>
+          <li><a href="/courses.html"><i class="bi bi-arrow-right-circle-fill"></i> Others</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="p-2" style="background-color: var(--brand-yellow-dark);">
+      <p class="text-dark" style="font-size:0.8rem; text-align: center;">&copy;2015-<spna id="rights"></spna> Future
+        Tech Academy. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/js/config.js"></script>
+  <script src="/js/script.js"></script>
+  <script src="/js/index.js"></script>
+</body>
+
+</html>

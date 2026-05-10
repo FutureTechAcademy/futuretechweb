@@ -1,0 +1,9 @@
+ .tk-badge {
+   background: linear-gradient(45deg, #00c6ff, #0072ff);
+   padding: 5px 10px;
+   border-radius: 50px;
+   font-size: 12px;
+   margin: 3px;
+   display: inline-block;
+   color:white;
+ }

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Future Tech Academy | Add Intern</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body { background: #f8f9fa; }
+        .card { border-radius: 15px; }
+    </style>
+</head>
+
+<body>
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+
+            <div class="card shadow">
+                <div class="card-body p-4">
+
+                    <h3 class="text-center mb-4">Add Internship</h3>
+
+                    <form id="internForm">
+
+                        <!-- Title -->
+                        <div class="mb-3">
+                            <label class="form-label">Internship Title</label>
+                            <input type="text" id="title" class="form-control" required>
+                        </div>
+
+                        <!-- Description -->
+                        <div class="mb-3">
+                            <label class="form-label">Description</label>
+                            <textarea id="description" placeholder="below 150 letters" class="form-control" rows="4" required></textarea>
+                        </div>
+
+                        <!-- Technologies -->
+                        <div class="mb-3">
+                            <label class="form-label">Technologies (Comma Separated)</label>
+                            <input type="text" id="technologies" class="form-control"
+                                   placeholder="HTML, CSS, JS, React" required>
+                        </div>
+
+                        <!-- Duration -->
+                        <div class="mb-3">
+                            <label class="form-label">Duration</label>
+                            <input type="text" id="duration" class="form-control"
+                                   placeholder="Example: 30 Hours" required>
+                        </div>
+
+                        <!-- Image -->
+                        <div class="mb-3">
+                            <label class="form-label">Image</label>
+                            <input type="file" id="image" class="form-control" accept="image/*" required>
+                        </div>
+
+                        <!-- Submit -->
+                        <button class="btn btn-success w-100">Add Internship</button>
+
+                    </form>
+
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="/js/config.js"></script>
+
+<script>
+
+const API = window.ENV.API_URL;
+
+document.getElementById("internForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const title = document.getElementById("title").value;
+    const description = document.getElementById("description").value;
+    const techInput = document.getElementById("technologies").value;
+    const duration = document.getElementById("duration").value;
+    const imageFile = document.getElementById("image").files[0];
+
+    // convert string → array
+    const technologies = techInput.split(",").map(t => t.trim());
+
+    const formData = new FormData();
+    formData.append("Title", title);
+    formData.append("Description", description);
+    formData.append("Duration", duration);
+    formData.append("Image", imageFile);
+
+    technologies.forEach(t => {
+        formData.append("Technologies", t);
+    });
+
+    fetch(API + "/internship", {
+        method: "POST",
+        headers: {
+            authorization: localStorage.getItem("token")
+        },
+        body: formData
+    })
+    .then(res => res.json())
+    .then(data => {
+            window.location.href = "admin.html";
+      
+    })
+    .catch(err => {
+        console.error(err);
+        alert("Something went wrong!");
+    });
+
+});
+
+</script>
+
+</body>
+</html>

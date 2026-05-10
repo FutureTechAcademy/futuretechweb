@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Future Tech Academy | Add-Course</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background: #f8f9fa;
+        }
+
+        .card {
+            border-radius: 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+
+                <div class="card shadow">
+                    <div class="card-body p-4">
+
+                        <h3 class="mb-4 text-center">Add New Course</h3>
+
+                        <form id="courseForm">
+
+                            <!-- Title -->
+                            <div class="mb-3">
+                                <label class="form-label">Course Title</label>
+                                <input type="text" id="title" class="form-control" required>
+                            </div>
+
+                            <!-- Description -->
+                            <div class="mb-3">
+                                <label class="form-label">Description</label>
+                                <textarea id="description" placeholder="below 500 letters"  rows="4" class="form-control" required></textarea>
+                            </div>
+
+                            <!-- Category -->
+                            <div class="mb-3">
+                                <label class="form-label">Category</label>
+                                <select id="category" class="form-select" required>
+                                    <option value="">Select Category</option>
+                                    <option value="IT">IT</option>
+                                    <option value="Commerce">Commerce</option>
+                                    <option value="Design">Design</option>
+                                    <option value="Electrical">Electrical</option>
+                                    <option value="Mechanical">Mechanical</option>
+                                    <option value="Civil">Civil</option>
+                                    <option value="Trending">Trending</option>
+                                    <option value="Others">Others</option>
+                                </select>
+                            </div>
+
+                            <!-- Technologies -->
+                            <div class="mb-3">
+                                <label class="form-label">Technologies (Comma Separated)</label>
+                                <textarea type="text" id="technologies" class="form-control"
+                                    placeholder="Example: c basic, loop, function" rows="4" required></textarea>
+                            </div>
+
+                            <!-- Duration -->
+                            <div class="mb-3">
+                                <label class="form-label">Duration</label>
+                                <input type="text" id="duration" class="form-control" placeholder="Example: 40 Hours"
+                                    required>
+                            </div>
+
+                            <!-- Image -->
+                            <div class="mb-3">
+                                <label class="form-label">Course Image (1920x1080 recommended)</label>
+                                <input type="file" id="image" class="form-control" accept="image/*" required>
+                            </div>
+
+                            <!-- Submit -->
+                            <button type="submit" class="btn btn-primary w-100">
+                                Post Course
+                            </button>
+
+                        </form>
+
+                        <div id="message" class="mt-3 text-center"></div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/config.js"></script>
+    <script>
+
+        const API = window.ENV.API_URL
+
+        document.getElementById("courseForm").addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            const title = document.getElementById("title").value;
+            const description = document.getElementById("description").value;
+            const category = document.getElementById("category").value;
+            const technologiesInput = document.getElementById("technologies").value;
+            const duration = document.getElementById("duration").value;
+            const imageFile = document.getElementById("image").files[0];
+
+            // Convert technologies string to array
+            const technologies = technologiesInput.split(",").map(t => t.trim());
+
+            const formData = new FormData();
+            formData.append("Title", title);
+            formData.append("Description", description);
+            formData.append("Category", category);
+            formData.append("Duration", duration);
+            formData.append("Image", imageFile);
+
+            // Append array properly
+            technologies.forEach(tech => {
+                formData.append("Technologies[]", tech);
+            });
+
+            fetch(API + "/course", {
+                method: "POST",
+                headers: { authorization: localStorage.getItem("token") },
+                body: formData
+            })
+                .then(res => res.json())
+                .then(data => {
+                    window.location.href="admin.html"
+                    
+
+
+                })
+                .catch(error => {
+                    console.error(error);
+                    alert("Something went wrong!")
+                    
+                });
+
+        });
+
+    </script>
+
+</body>
+
+</html>

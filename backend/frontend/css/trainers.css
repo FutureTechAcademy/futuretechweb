@@ -1,0 +1,71 @@
+ .trainer-card {
+   border-radius: 20px;
+   overflow: hidden;
+   backdrop-filter: blur(15px);
+   background: rgba(255, 255, 255, 0.08);
+   border: 1px solid rgba(255, 255, 255, 0.2);
+   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+   transition: 0.4s ease;
+   color: #fff;
+ }
+
+ .trainer-card:hover {
+   transform: translateY(-10px) scale(1.02);
+   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+ }
+
+ .trainer-img {
+   margin: 10px 0;
+   width: 100%;
+   height: 220px;
+   object-fit: cover;
+ }
+
+ .trainer-body {
+   padding: 20px;
+ }
+
+ .trainer-name {
+   font-size: 22px;
+   font-weight: 600;
+   color: var(--brand-blue-dark);
+ }
+
+ .trainer-role {
+   font-size: 14px;
+   color: #00d4ff;
+   margin-bottom: 10px;
+ }
+
+ .skills {
+   margin: 10px 0;
+ }
+
+ .skill-badge {
+   background: linear-gradient(45deg, #00c6ff, #0072ff);
+   padding: 5px 10px;
+   border-radius: 50px;
+   font-size: 12px;
+   margin: 3px;
+   display: inline-block;
+ }
+
+ .experience {
+   font-size: 14px;
+   opacity: 0.8;
+   color: var(--brand-blue-dark);
+   margin: 10px 0;
+   font-weight: bolder;
+ }
+
+ .custom-icon {
+  margin: 0 auto;
+   width: 80px;
+   height: 80px;
+   background-color: var(--brand-blue-dark);
+   border-radius: 50%;
+   font-size: 3rem;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+ }

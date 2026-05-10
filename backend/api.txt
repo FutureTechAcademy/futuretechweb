@@ -1,0 +1,181 @@
+A) MODELS
+-----------
+
+1) Enrollment
+  - Name
+  - Email
+  - Phone
+  - Course (dropdown from DB)
+
+Data format 
+-------------
+* POST API -> http://localhost:4000/user
+* DELETE API -> http://localhost:4000/user
+* GET API -> http://localhost:4000/user
+
+Json Data ->
+{
+  "Name"  : "bala",
+  "Email" : "bala@gmail.com",
+  "Phone" : "9629054457",
+  "Course" : "Python"
+}
+
+
+-------------------------------------------------------------------
+2) Course (Admin Posted – Public View Only)
+  - Title
+  - Description
+  - Category
+  - Technologies (array)
+  - Duration
+  - Image
+
+ Data Format
+ ------------
+ * image size -> 1920 x 1080 pixels
+ * GET API -> http://localhost:4000/course
+ * GET API -> http://localhost:4000/course/list
+ * GET API -> http://localhost:4000/course/6990493bf65ec7f505fc4186(_id)
+ * POST API -> http://localhost:4000/course
+ * DELETE API -> http://localhost:4000/course/699048daf65ec7f505fc4184(_id)
+ * DELETE API -> http://localhost:4000/course
+
+"Category": -> ["IT", "Commerce", "Design", "Trending", "Others","Electrical","Mechanical","Civil"]
+ 
+ formDate ->
+ {
+    "Title": "C Programming",
+    "Description": "Learn the fundamentals of C programming including variables, loops, functions, arrays, pointers, and file handling. Suitable for beginners and students preparing for interviews.",
+    "Category": "IT",
+    "Technologies": "c basic",
+    "Technologies": "loop",
+    "Technologies": "function",
+    "Duration": "40 Hours",
+    "Image": files[0]
+  }
+------------------------------------------------------------------------
+3) Trainer Schema (Admin Posted – Public View Only)
+  - Name
+  - Role
+  - Skills (array)
+  - Experience
+  - Photo
+Data format 
+-------------
+* photo size -> 1080×1350 pixels
+POST API -> http://localhost:4000/trainer
+GET API -> http://localhost:4000/trainer
+DELETE API -> http://localhost:4000/trainer/69958e04b9b33d70cd66654c(_id)
+DELETE API -> http://localhost:4000/trainer
+formData->
+{
+  "Name":"Suvi Siva",
+  "Role" :"Software Trainer",
+  "Skills":"Java",
+  "Skills":"Python",
+  "Skills":"AI & ML",
+  "Experience":6,
+  "Photo":files[0]
+}
+
+----------------------------------------------------------------------------------
+
+4) Project Schema  (Admin Posted – Public View Only)
+  - Title
+  - Description
+  - Technologies (array)
+  - Image
+
+Data Format
+--------------
+ * image size -> 1920 x 1080 pixels
+ * POST API -> http://localhost:4000/project
+ * GET API -> http://localhost:4000/project
+ * DELETE API -> http://localhost:4000/project/6999158e5f0357cb4167e37f(_id)
+ * DELETE API -> http://localhost:4000/project
+ formData ->
+ {
+  "Title":"Ecommerce Project",
+   "Description":"Online Product sales Project",
+   "Technologies":"HTML",
+   "Technologies":"CSS",
+   "Technologies":"Java Script",
+   "Image":files[0]
+ }
+
+-------------------------------------------------------------------------------------
+5) Post Schema (Admin Posted – Public View Only)
+  - Title
+  - Description
+  - Image
+
+Data Format
+-------------
+ * image size -> 1080 x 1350 pixels 
+ * GET API -> http://localhost:4000/post
+ * POST API -> http://localhost:4000/post
+ * DELETE API -> http://localhost:4000/post/699960744aad91fca9ca1fa7(_id)
+ * DELETE API -> http://localhost:4000/post/
+formData ->
+{
+  "Title":"WorkShop Function",
+  "Description":"AI And ML Workshop sunday 10/12/24",
+  "Image":files[0]
+}
+
+-------------------------------------------------------------------------------
+6) Slide Schema (Admin Posted – Public View Only)
+  - Title
+  - Description
+  - Image
+  
+  Data Format
+  -----------
+   * image size -> 1920 x 1080 pixels
+   * POST API -> http://localhost:4000/slide
+   * GET API -> http://localhost:4000/slide
+   * DELETE API -> http://localhost:4000/slide/699a4269c6ce47b8da5434bc(_id)
+   * DELETE API -> http://localhost:4000/slide 
+   formData ->
+   {
+    "Title": "web design",
+    "Description": "best in india",
+    "Image":files[0]
+   }
+
+   -----------------------------------------------------------------------------
+
+7)  Admin 
+-----------
+* POST API -> http://localhost:4000/admin
+JSON Format ->
+{
+"Name" : "admin",
+"Pass" : "SuviSiva@2000"
+}
+
+
+-------------------------------------------------------------------------------------
+
+8) Internship Schema
+----------------------
+Data Format
+-----------
+* image size ->  1920 x 1080 pixels
+* POST API -> http://localhost:4000/internship
+* GET API -> http://localhost:4000/internship
+* DELETE API ->http://localhost:4000/internship/69a56b579ecffc6da77a2b1b(_id)
+* DELETE API -> http://localhost:4000/internship
+formData -> 
+{
+    "Title": "Java",
+    "Description": "java program is a fundement of computer program. its is used for it interview all companies",
+    "Technologies": [
+        "Core Java",
+        "Advanced Java",
+        "Spring boot"
+    ],
+    "Duration": "30 Hours",
+    "Image": files[0],
+}

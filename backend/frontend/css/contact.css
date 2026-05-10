@@ -1,0 +1,21 @@
+
+.follow-us{
+ transition:transform 0.3s linear;
+}
+
+.follow-us:hover{
+   
+    transform: translateY(-10px);
+}
+
+ .custom-icon {
+  margin: 0 auto;
+   width: 80px;
+   height: 80px;
+   background-color: var(--brand-blue-dark);
+   border-radius: 50%;
+   font-size: 3rem;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+ }
