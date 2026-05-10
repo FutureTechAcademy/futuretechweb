@@ -92,7 +92,7 @@
             formData.append("Description", description)
             formData.append("Image", image)
 
-            alert("form Data"+formData)
+            
 
             fetch(API + "/post", {
                 method: "POST",
@@ -100,7 +100,7 @@
                 body: formData
             })
                 .then((res) => {
-                    alert(res)
+                    alert(res.json())
                     location.href = "/admin.html"
                 }).catch((err) => {
                     alert(err)
