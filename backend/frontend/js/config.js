@@ -1,3 +1,3 @@
 window.ENV={
-    API_URL:"https://futuretechacademytenkasi.onrender.com"
+    API_URL: window.location.origin
 }

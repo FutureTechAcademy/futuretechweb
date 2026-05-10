@@ -124,7 +124,7 @@
 
             // Append array properly
             technologies.forEach(tech => {
-                formData.append("Technologies[]", tech);
+                formData.append("Technologies", tech);
             });
 
             fetch(API + "/course", {
