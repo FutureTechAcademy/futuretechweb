@@ -92,6 +92,7 @@
             formData.append("Description", description)
             formData.append("Image", image)
 
+            alert(localStorage.getItem("token"))
             
 
             fetch(API + "/post", {
@@ -100,9 +101,8 @@
                 body: formData
             })
                 .then((res) => {
-                    return res.json()
-                    // location.href = "/admin.html"
-                }).then((dt)=>{alert(dt)})
+                    location.href = "/admin.html"
+                })
                 .catch((err) => {
                     alert(err)
 
