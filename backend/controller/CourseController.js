@@ -1,108 +1,112 @@
-const path = require("path")
-const fs = require("fs")
-const Course = require("../model/Course")
+const Course = require("../model/Course");
+const cloudinary = require("../middleware/cloudinary");
 
-//Post Courses
+// ✅ Post Course
 const postCourse = async (req, res) => {
     try {
-        const { Title, Description, Category ,Technologies, Duration } = req.body
-        const Image = req.file
-            ? `${req.protocol}://${req.get("host")}/images/${req.file.filename}`
-            : null;
+        const { Title, Description, Category, Technologies, Duration } = req.body;
 
-        const course = new Course({ Title, Description,Category ,Technologies, Duration, Image })
-        await course.save()
-        res.send(course)
-    }
-    catch (err) {
-        res.send(err.message)
-    }
-}
+        // Cloudinary Image URL
+        const Image = req.file ? req.file.path : null;
 
-//Get All Courses
+        const course = new Course({
+            Title,
+            Description,
+            Category,
+            Technologies,
+            Duration,
+            Image
+        });
+
+        await course.save();
+        res.send(course);
+
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+};
+
+// ✅ Get All Courses
 const getAllCourse = async (req, res) => {
     try {
-        const allData = await Course.find({})
-        res.send(allData)
+        const allData = await Course.find({});
+        res.send(allData);
+    } catch (err) {
+        res.status(500).send(err.message);
     }
-    catch (err) {
-        res.send(err.message)
-    }
-}
+};
 
-//Get Courses By ID
+// ✅ Get Course By ID
 const getCourseById = async (req, res) => {
     try {
-        const id = req.params.id
-        const allData = await Course.findById({ _id: id })
-        res.send(allData)
+        const id = req.params.id;
+        const data = await Course.findById(id);
+        res.send(data);
+    } catch (err) {
+        res.status(500).send(err.message);
     }
-    catch (err) {
-        res.send(err.message)
-    }
-}
+};
 
-//Get Course List
+// ✅ Get Course List (Only Title)
 const getCourseList = async (req, res) => {
     try {
-        const allData = await Course.find({}, "Title")
-        res.send(allData)
+        const allData = await Course.find({}, "Title");
+        res.send(allData);
+    } catch (err) {
+        res.status(500).send(err.message);
     }
-    catch (err) {
-        res.send(err.message)
-    }
-}
+};
 
-//Delete Courses By ID
+// ✅ Delete Course By ID (Cloudinary delete)
 const delCourseById = async (req, res) => {
     try {
-
         const id = req.params.id;
-        const course = await Course.findById({ _id: id });
+        const course = await Course.findById(id);
 
         if (!course) {
-            return res.send({ message: "Course not found" });
+            return res.status(404).send("Course not found");
         }
 
+        // Delete image from Cloudinary
         if (course.Image) {
-            const imageName = course.Image.split("/images/")[1];
-            const imagePath = path.join(__dirname, "../images", imageName);
-
-            if (fs.existsSync(imagePath)) {
-                fs.unlinkSync(imagePath);
-            }
+            const publicId = course.Image.split("/").pop().split(".")[0];
+            await cloudinary.uploader.destroy("ftacademy/" + publicId);
         }
-        await Course.deleteOne({ _id: id });
-        res.send(course)
-    }
-    catch (err) {
-        res.send(err.message)
-    }
-}
 
-//Delete All Course 
+        await Course.findByIdAndDelete(id);
+
+        res.send(course);
+
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+};
+
+// ✅ Delete All Courses (Cloudinary delete)
 const delAllCourse = async (req, res) => {
     try {
-        const course = await Course.find({})
-        await Course.deleteMany({})
+        const courses = await Course.find({});
 
-        course.forEach((cou) => {
-            if (cou.Image) {
-                const imageName = cou.Image.split("/images/")[1];
-                const imagePath = path.join(__dirname, "../images", imageName);
-
-                if (fs.existsSync(imagePath)) {
-                    fs.unlinkSync(imagePath);
-                }
+        for (let course of courses) {
+            if (course.Image) {
+                const publicId = course.Image.split("/").pop().split(".")[0];
+                await cloudinary.uploader.destroy("ftacademy/" + publicId);
             }
-        })
-        res.send(course)
+        }
+
+        await Course.deleteMany({});
+        res.send(courses);
+
+    } catch (err) {
+        res.status(500).send(err.message);
     }
-    catch (err) {
-        res.send(err.message)
-    }
-}
+};
 
-
-
-module.exports = { postCourse, getAllCourse, getCourseById, getCourseList, delCourseById, delAllCourse }
+module.exports = {
+    postCourse,
+    getAllCourse,
+    getCourseById,
+    getCourseList,
+    delCourseById,
+    delAllCourse
+};

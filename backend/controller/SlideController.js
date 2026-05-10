@@ -1,79 +1,82 @@
-const Slide = require("../model/Slide")
-const path = require("path")
-const fs = require("fs")
-// Add Slide 
+const Slide = require("../model/Slide");
+const cloudinary = require("../middleware/cloudinary");
+
+// ✅ Add Slide
 const addSlide = async (req, res) => {
     try {
-        const { Title, Description } = req.body
-        const Image = req.file
-            ? `${req.protocol}://${req.get("host")}/images/${req.file.filename}`
-            : null
-        const slide = new Slide({ Title, Description, Image })
-        await slide.save()
-        res.send(slide)
-    }
-    catch (err) {
-        res.send(err.message)
-    }
+        const { Title, Description } = req.body;
 
-}
+        // Cloudinary URL
+        const Image = req.file ? req.file.path : null;
 
-// Get Slide 
+        const slide = new Slide({ Title, Description, Image });
+        await slide.save();
+
+        res.send(slide);
+
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+};
+
+// ✅ Get Slides
 const getSlide = async (req, res) => {
     try {
-        const slides = await Slide.find({})
-        res.send(slides)
+        const slides = await Slide.find({});
+        res.send(slides);
+    } catch (err) {
+        res.status(500).send(err.message);
     }
-    catch (err) {
-        res.send(err.message)
-    }
+};
 
-}
-
-
-// Delete Single Slide 
+// ✅ Delete Single Slide (Cloudinary delete)
 const delSingleSlide = async (req, res) => {
     try {
-        const id = req.params.id
-        const slide = await Slide.findOne({ _id: id })
-        if (slide.Image) {
-            const FileName = slide.Image.split("/images/")[1]
-            const FilePath = path.join(__dirname, "../images", FileName)
-            if (fs.existsSync(FilePath)) {
-                fs.unlinkSync(FilePath)
-            }
+        const id = req.params.id;
+        const slide = await Slide.findById(id);
+
+        if (!slide) {
+            return res.status(404).send("Slide not found");
         }
-        await Slide.deleteOne({ _id: id })
-        res.send(slide)
 
+        // Delete image from Cloudinary
+        if (slide.Image) {
+            const publicId = slide.Image.split("/").pop().split(".")[0];
+            await cloudinary.uploader.destroy("ftacademy/" + publicId);
+        }
+
+        await Slide.findByIdAndDelete(id);
+
+        res.send(slide);
+
+    } catch (err) {
+        res.status(500).send(err.message);
     }
-    catch (err) {
-        res.send(err.message)
-    }
-}
+};
 
-
-// Delete All Slide 
+// ✅ Delete All Slides (Cloudinary delete)
 const delAllSlide = async (req, res) => {
     try {
-        const slides = await Slide.find({})
-        slides.forEach((slide) => {
+        const slides = await Slide.find({});
+
+        for (let slide of slides) {
             if (slide.Image) {
-                const FileName = slide.Image.split("/images/")[1]
-                const FilePath = path.join(__dirname, "../images", FileName)
-                if (fs.existsSync(FilePath)) {
-                    fs.unlinkSync(FilePath)
-                }
+                const publicId = slide.Image.split("/").pop().split(".")[0];
+                await cloudinary.uploader.destroy("ftacademy/" + publicId);
             }
-        })
+        }
 
-        await Slide.deleteMany({})
-        res.send(slides)
+        await Slide.deleteMany({});
+        res.send(slides);
 
+    } catch (err) {
+        res.status(500).send(err.message);
     }
-    catch (err) {
-        res.send(err.message)
-    }
-}
+};
 
-module.exports = { addSlide, getSlide, delSingleSlide ,delAllSlide}
+module.exports = {
+    addSlide,
+    getSlide,
+    delSingleSlide,
+    delAllSlide
+};

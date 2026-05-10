@@ -1,94 +1,87 @@
-const Project = require("../model/Project")
-const fs = require("fs")
-const path = require("path")
-// Add Project
-const addProject =async(req,res)=>
-{
-     try{
-          const{Title,Description,Technologies}= req.body
-          const Image = req.file
-            ? `${req.protocol}://${req.get("host")}/images/${req.file.filename}`
-            : null;
+const Project = require("../model/Project");
+const cloudinary = require("../middleware/cloudinary");
 
-        const project = new Project({Title,Description,Technologies,Image})
-        await project.save()
-        res.send(project)
-     }
-     catch(err)
-     {
-        res.send(err.message)
-     }
-}
+// ✅ Add Project
+const addProject = async (req, res) => {
+    try {
+        const { Title, Description, Technologies } = req.body;
 
+        // Cloudinary URL
+        const Image = req.file ? req.file.path : null;
 
-// Get All Project
-const getProject =async(req,res)=>
-{
-     try{
-         const project =await Project.find({})
-         res.send(project)
-     }
-     catch(err)
-     {
-        res.send(err.message)
-     }
-}
+        const project = new Project({
+            Title,
+            Description,
+            Technologies,
+            Image
+        });
 
-// Delete Single Project
-const delSingleProject =async(req,res)=>
-{
-     try{
-             const id=  req.params.id
-             const project = await Project.findOne({_id:id})
-             if(project.Image)
-             {
-                const imageName = project.Image.split("/images/")[1]
-                const imagePath = path.join(__dirname,"../images",imageName)
+        await project.save();
+        res.send(project);
 
-                if(fs.existsSync(imagePath))
-                {
-                  fs.unlinkSync(imagePath)
-                }
-             }
-             await Project.deleteOne({_id:id})
-             res.send(project)
-     }
-     catch(err)
-     {
-        res.send(err.message)
-     }
-}
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+};
 
+// ✅ Get All Projects
+const getProject = async (req, res) => {
+    try {
+        const projects = await Project.find({});
+        res.send(projects);
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+};
 
-// Delete All Project
-const delProject =async(req,res)=>
-{
-     try{
-             const projects = await Project.find({})
-             
-             projects.forEach((project)=>
-            {
-               if(project.Image)
-             {
-                const imageName = project.Image.split("/images/")[1]
-                const imagePath = path.join(__dirname,"../images",imageName)
+// ✅ Delete Single Project (Cloudinary delete)
+const delSingleProject = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const project = await Project.findById(id);
 
-                if(fs.existsSync(imagePath))
-                {
-                  fs.unlinkSync(imagePath)
-                }
-             }
+        if (!project) {
+            return res.status(404).send("Project not found");
+        }
 
-            })
-             
-             await Project.deleteMany({})
-             res.send(projects)
-     }
-     catch(err)
-     {
-        res.send(err.message)
-     }
-}
+        // Delete image from Cloudinary
+        if (project.Image) {
+            const publicId = project.Image.split("/").pop().split(".")[0];
+            await cloudinary.uploader.destroy("ftacademy/" + publicId);
+        }
 
+        await Project.findByIdAndDelete(id);
 
-module.exports={addProject,getProject,delSingleProject,delProject}
+        res.send(project);
+
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+};
+
+// ✅ Delete All Projects (Cloudinary delete)
+const delProject = async (req, res) => {
+    try {
+        const projects = await Project.find({});
+
+        for (let project of projects) {
+            if (project.Image) {
+                const publicId = project.Image.split("/").pop().split(".")[0];
+                await cloudinary.uploader.destroy("ftacademy/" + publicId);
+            }
+        }
+
+        await Project.deleteMany({});
+        res.send(projects);
+
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+};
+
+module.exports = {
+    addProject,
+    getProject,
+    delSingleProject,
+    delProject
+};

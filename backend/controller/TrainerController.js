@@ -1,90 +1,88 @@
-const Trainer = require("../model/Trainer")
-const path = require("path")
-const fs = require("fs")
-// Add Trainer
-const addTrainer = async(req,res)=>
-{
-  try{
-      const {Name,Role,Skills,Experience}=req.body
-      const Photo= req.file
-            ? `${req.protocol}://${req.get("host")}/images/${req.file.filename}`
-            : null;
-      const trainer = new Trainer({Name,Role,Skills,Experience,Photo})
-      await trainer.save()
-      res.send(trainer)
-  }
-  catch(err)
-  {
-    res.send(err.message)
-  }
-}
+const Trainer = require("../model/Trainer");
+const cloudinary = require("../middleware/cloudinary");
 
+// ✅ Add Trainer
+const addTrainer = async (req, res) => {
+    try {
+        const { Name, Role, Skills, Experience } = req.body;
 
-// get Trainer
-const getTrainer = async(req,res)=>
-{
-  try{
-      const trainers=await Trainer.find({})
-      res.send(trainers)
-  }
-  catch(err)
-  {
-    res.send(err.message)
-  }
-}
+        // Cloudinary URL
+        const Photo = req.file ? req.file.path : null;
 
+        const trainer = new Trainer({
+            Name,
+            Role,
+            Skills,
+            Experience,
+            Photo
+        });
 
-// Delete Single Trainer
-const delSingleTrainer = async(req,res)=>
-{
-  try {
-  
-          const id = req.params.id;
-          const trainer= await Trainer.findById({ _id: id });
-  
-          if (!trainer) {
-              return res.send({ message: "Trainer not found" });
-          }
-  
-          if (trainer.Photo) {
-              const imageName = trainer.Photo.split("/images/")[1];
-              const imagePath = path.join(__dirname, "../images", imageName);
-  
-              if (fs.existsSync(imagePath)) {
-                  fs.unlinkSync(imagePath);
-              }
-          }
-          await Trainer.deleteOne({ _id: id });
-          res.send(trainer)
-      }
-      catch (err) {
-          res.send(err.message)
-      }
-}
+        await trainer.save();
+        res.send(trainer);
 
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+};
 
-//Delete All Trainer 
+// ✅ Get Trainers
+const getTrainer = async (req, res) => {
+    try {
+        const trainers = await Trainer.find({});
+        res.send(trainers);
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+};
+
+// ✅ Delete Single Trainer (Cloudinary delete)
+const delSingleTrainer = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const trainer = await Trainer.findById(id);
+
+        if (!trainer) {
+            return res.status(404).send("Trainer not found");
+        }
+
+        // Delete image from Cloudinary
+        if (trainer.Photo) {
+            const publicId = trainer.Photo.split("/").pop().split(".")[0];
+            await cloudinary.uploader.destroy("ftacademy/" + publicId);
+        }
+
+        await Trainer.findByIdAndDelete(id);
+
+        res.send(trainer);
+
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+};
+
+// ✅ Delete All Trainers (Cloudinary delete)
 const delAllTrainer = async (req, res) => {
     try {
-        const trainer= await Trainer.find({})
-        await Trainer.deleteMany({})
+        const trainers = await Trainer.find({});
 
-       trainer.forEach((tra) => {
-            if (tra.Photo) {
-                const imageName = tra.Photo.split("/images/")[1];
-                const imagePath = path.join(__dirname, "../images", imageName);
-
-                if (fs.existsSync(imagePath)) {
-                    fs.unlinkSync(imagePath);
-                }
+        for (let trainer of trainers) {
+            if (trainer.Photo) {
+                const publicId = trainer.Photo.split("/").pop().split(".")[0];
+                await cloudinary.uploader.destroy("ftacademy/" + publicId);
             }
-        })
-        res.send(trainer)
-    }
-    catch (err) {
-        res.send(err.message)
-    }
-}
+        }
 
+        await Trainer.deleteMany({});
+        res.send(trainers);
 
-module.exports={addTrainer,getTrainer,delSingleTrainer,delAllTrainer}
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+};
+
+module.exports = {
+    addTrainer,
+    getTrainer,
+    delSingleTrainer,
+    delAllTrainer
+};

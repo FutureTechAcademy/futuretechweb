@@ -1,86 +1,88 @@
-const Internship = require("../model/Internship")
-const path = require("path")
-const fs = require("fs")
-// Add Internship
+const Internship = require("../model/Internship");
+const cloudinary = require("../middleware/cloudinary");
+
+// ✅ Add Internship
 const addInternship = async (req, res) => {
     try {
-        const { Title, Description, Technologies, Duration } = req.body
-        const Image = req.file
-            ? `${req.protocol}://${req.get("host")}/images/${req.file.filename}`
-            : null;
-        const internship = new Internship({ Title, Description, Technologies, Duration, Image })
-        await internship.save()
-        res.send(internship)
-    }
-    catch (err) {
-        res.send(err.message)
-    }
-}
+        const { Title, Description, Technologies, Duration } = req.body;
 
-// get All Internship
+        // Cloudinary URL
+        const Image = req.file ? req.file.path : null;
+
+        const internship = new Internship({
+            Title,
+            Description,
+            Technologies,
+            Duration,
+            Image
+        });
+
+        await internship.save();
+        res.send(internship);
+
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+};
+
+// ✅ Get All Internship
 const getAllInternship = async (req, res) => {
     try {
-        const internship = await Internship.find({})
-        res.send(internship)
+        const internships = await Internship.find({});
+        res.send(internships);
+    } catch (err) {
+        res.status(500).send(err.message);
     }
-    catch (err) {
-        res.send(err.message)
-    }
-}
+};
 
-
-// Delete Single Internship
+// ✅ Delete Single Internship (Cloudinary delete)
 const delSingleInternship = async (req, res) => {
     try {
         const id = req.params.id;
-        const intern = await Internship.findById({ _id: id });
+        const intern = await Internship.findById(id);
 
         if (!intern) {
-            return res.send({ message: "Course not found" });
+            return res.status(404).send("Internship not found");
         }
 
+        // Delete image from Cloudinary
         if (intern.Image) {
-            const imageName = intern.Image.split("/images/")[1];
-
-            const imagePath = path.join(__dirname, "../images", imageName);
-
-            if (fs.existsSync(imagePath)) {
-                fs.unlinkSync(imagePath);
-            }
+            const publicId = intern.Image.split("/").pop().split(".")[0];
+            await cloudinary.uploader.destroy("ftacademy/" + publicId);
         }
-        await Internship.deleteOne({ _id: id });
-        res.send(intern)
-    }
-    catch (err) {
-        res.send(err.message)
-    }
-}
 
-// Delete All Internship
+        await Internship.findByIdAndDelete(id);
+
+        res.send(intern);
+
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+};
+
+// ✅ Delete All Internship (Cloudinary delete)
 const delInternship = async (req, res) => {
     try {
-        const interns = await Internship.find({})
+        const interns = await Internship.find({});
+
         for (let intern of interns) {
-            if (!intern) {
-                return res.send({ message: "Course not found" });
-            }
-
             if (intern.Image) {
-                const imageName = intern.Image.split("/images/")[1];
-
-                const imagePath = path.join(__dirname, "../images", imageName);
-
-                if (fs.existsSync(imagePath)) {
-                    fs.unlinkSync(imagePath);
-                }
+                const publicId = intern.Image.split("/").pop().split(".")[0];
+                await cloudinary.uploader.destroy("ftacademy/" + publicId);
             }
         }
-        await Internship.deleteMany({})
-        res.send(interns)
-    }
-    catch (err) {
-        res.send(err.message)
-    }
-}
 
-module.exports = { addInternship, getAllInternship, delSingleInternship, delInternship }
+        await Internship.deleteMany({});
+        res.send(interns);
+
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+};
+
+module.exports = {
+    addInternship,
+    getAllInternship,
+    delSingleInternship,
+    delInternship
+};
