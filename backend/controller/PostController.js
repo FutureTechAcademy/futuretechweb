@@ -1,5 +1,5 @@
 const Post = require("../model/Post");
-const cloudinary = require("../config/cloudinary");
+const cloudinary = require("../middleware/cloudinary");
 
 // ✅ Add Post
 const addPost = async (req, res) => {
