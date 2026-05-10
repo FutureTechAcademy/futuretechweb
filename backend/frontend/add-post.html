@@ -78,7 +78,7 @@
     <script>
 
         const API = window.ENV.API_URL;
-        alert(API)
+        
         // FORM SUBMIT
         document.getElementById("postForm").addEventListener("submit", function (e) {
             e.preventDefault()
@@ -92,12 +92,15 @@
             formData.append("Description", description)
             formData.append("Image", image)
 
+            alert("form Data"+formData)
+
             fetch(API + "/post", {
                 method: "POST",
                 headers: { authorization: localStorage.getItem("token") },
                 body: formData
             })
                 .then((res) => {
+                    alert(res)
                     location.href = "/admin.html"
                 }).catch((err) => {
                     alert(err)
