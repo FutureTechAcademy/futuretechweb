@@ -1,80 +1,75 @@
-const Post = require("../model/Post")
-const path = require("path")
-const fs = require("fs")
+const Post = require("../model/Post");
+const cloudinary = require("../config/cloudinary");
 
-// Add Post
+// ✅ Add Post
 const addPost = async (req, res) => {
     try {
-        const { Title, Description } = req.body
-        const Image = req.file
-            ? `${req.protocol}://${req.get("host")}/images/${req.file.filename}`
-            : null
+        const { Title, Description } = req.body;
 
-        const post = new Post({ Title, Description, Image })
-        await post.save()
-        res.send(post)
-    }
-    catch (err) {
-        res.send(err.message)
-    }
-}
+        // Cloudinary URL
+        const Image = req.file ? req.file.path : null;
 
-// Get Post
+        const post = new Post({ Title, Description, Image });
+        await post.save();
+
+        res.send(post);
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+};
+
+// ✅ Get Post
 const getPost = async (req, res) => {
     try {
-        const posts = await Post.find({}).sort({ createdAt: -1 })
-        res.send(posts)
+        const posts = await Post.find({}).sort({ createdAt: -1 });
+        res.send(posts);
+    } catch (err) {
+        res.status(500).send(err.message);
     }
-    catch (err) {
-        res.send(err.message)
-    }
-}
+};
 
-
-// del Post
+// ✅ Delete Single Post (Cloudinary delete)
 const delSinglePost = async (req, res) => {
     try {
-        const id = req.params.id
-        const post = await Post.findOne({ _id: id })
-        if (post.Image) {
-            const ImageName = post.Image.split("/images/")[1]
-            const ImagePath = path.join(__dirname, "../images", ImageName)
-            if (fs.existsSync(ImagePath)) {
-                fs.unlinkSync(ImagePath)
-            }
+        const id = req.params.id;
+        const post = await Post.findById(id);
+
+        if (!post) {
+            return res.status(404).send("Post not found");
         }
-        await Post.deleteOne({ _id: id })
-        res.send(post)
 
-    }
-    catch (err) {
-        res.send(err.message)
-    }
-}
+        // Delete image from Cloudinary
+        if (post.Image) {
+            const publicId = post.Image.split("/").pop().split(".")[0];
+            await cloudinary.uploader.destroy("ftacademy/" + publicId);
+        }
 
-// Add Post
+        await Post.findByIdAndDelete(id);
+
+        res.send(post);
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+};
+
+// ✅ Delete All Posts (Cloudinary delete)
 const delAllPost = async (req, res) => {
     try {
-        const posts = await Post.find({})
-        posts.forEach((post) => {
+        const posts = await Post.find({});
 
+        for (let post of posts) {
             if (post.Image) {
-                const ImageName = post.Image.split("/images/")[1]
-                const ImagePath = path.join(__dirname, "../images", ImageName)
-                if (fs.existsSync(ImagePath)) {
-                    fs.unlinkSync(ImagePath)
-                }
+                const publicId = post.Image.split("/").pop().split(".")[0];
+                await cloudinary.uploader.destroy("ftacademy/" + publicId);
             }
-        })
+        }
 
-        await Post.deleteMany({})
-        res.send(posts)
+        await Post.deleteMany({});
 
+        res.send(posts);
+    } catch (err) {
+        res.status(500).send(err.message);
     }
-    catch (err) {
-        res.send(err.message)
-    }
-}
+};
 
-
-module.exports = { addPost, getPost, delSinglePost ,delAllPost}
+module.exports = { addPost, getPost, delSinglePost, delAllPost };
