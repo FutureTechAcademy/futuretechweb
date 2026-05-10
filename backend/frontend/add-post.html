@@ -100,7 +100,7 @@
                 body: formData
             })
                 .then((res) => {
-                    alert(res.json())
+                    res.json().then((dt)=>alert(dt))
                     location.href = "/admin.html"
                 }).catch((err) => {
                     alert(err)
