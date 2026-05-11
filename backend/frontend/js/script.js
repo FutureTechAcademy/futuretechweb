@@ -2,7 +2,7 @@
 const nav = document.querySelector('.custom-nav');
 const animatedNodes = document.querySelectorAll('.reveal-up, .reveal-left, .reveal-right');
 
-// document.getElementById("rights").innerText=new Date().getFullYear()
+document.getElementById("rights").innerText=new Date().getFullYear()
 
 const onScroll = () => {
   if (!nav) return;
