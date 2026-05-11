@@ -58,4 +58,13 @@ app.use("/slide", slideRouter)
 app.use("/admin", adminRouter)
 app.use("/internship", internshipRouter)
 
+// Global Error Handler
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).json({
+        success: false,
+        message: "Something went wrong on the server!",
+        error: err.message
+    });
+});
 
