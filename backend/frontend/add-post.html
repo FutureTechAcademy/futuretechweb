@@ -92,9 +92,7 @@
             formData.append("Description", description)
             formData.append("Image", image)
 
-            alert(localStorage.getItem("token"))
-            
-
+          
             fetch(API + "/post", {
                 method: "POST",
                 headers: { authorization: localStorage.getItem("token") },
