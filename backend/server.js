@@ -16,9 +16,9 @@ const app = express()
 
 
 
-const dns = require('dns');
-dns.setDefaultResultOrder('ipv4first');
-dns.setServers(["1.1.1.1","8.8.8.8"])
+// const dns = require('dns');
+// dns.setDefaultResultOrder('ipv4first');
+// dns.setServers(["1.1.1.1","8.8.8.8"])
 
 // Variable 
 const PORT = process.env.PORT
@@ -47,7 +47,7 @@ app.get("/admin-panel", (req, res) => {
 app.use("/",express.static(path.join(__dirname,"frontend")))
 
 
-app.use("/images",express.static(path.join(__dirname,"images")))
+// app.use("/images",express.static(path.join(__dirname,"images")))
 app.use("/user",userRouter)
 app.use("/course",courseRouter)
 app.use("/trainer",trainerRouter)
