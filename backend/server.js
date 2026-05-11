@@ -26,39 +26,36 @@ const DB_PATH = process.env.MONGO_URL
 
 
 mongoose.connect(DB_PATH)
-.then(()=>
-{
-    console.log("Database Connected")
-})
-.catch((err)=>
-{
-    console.log(err.message)
-})
+    .then(() => {
+        console.log("Database Connected")
+        app.listen(PORT, () => {
+            console.log(`Server Started Port Number ${PORT}`)
+        })
+    })
+    .catch((err) => {
+        console.log(err.message)
+    })
 
 // Add Middleware
 app.use(express.json())
-app.use(express.urlencoded({extended:true}))
+app.use(express.urlencoded({ extended: true }))
 app.use(cors())
 
 // Add Static Files
 app.get("/admin-panel", (req, res) => {
     res.sendFile(path.join(__dirname, "frontend", "admin.html"));
 });
-app.use("/",express.static(path.join(__dirname,"frontend")))
+app.use("/", express.static(path.join(__dirname, "frontend")))
 
 
 // app.use("/images",express.static(path.join(__dirname,"images")))
-app.use("/user",userRouter)
-app.use("/course",courseRouter)
-app.use("/trainer",trainerRouter)
-app.use("/project",projectRouter)
-app.use("/post",postRouter)
-app.use("/slide",slideRouter)
-app.use("/admin",adminRouter)
-app.use("/internship",internshipRouter)
+app.use("/user", userRouter)
+app.use("/course", courseRouter)
+app.use("/trainer", trainerRouter)
+app.use("/project", projectRouter)
+app.use("/post", postRouter)
+app.use("/slide", slideRouter)
+app.use("/admin", adminRouter)
+app.use("/internship", internshipRouter)
 
 
-app.listen(PORT,()=>
-{
-    console.log(`Server Started Port Number ${PORT}`)
-})
