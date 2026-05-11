@@ -224,7 +224,7 @@ function scrollPrev() {
 document.querySelector("#search")
   .addEventListener("input", () => {
 
-    const value = document.querySelector("#search").value.toLowerCase();
+    const value = document.querySelector("#search").value.toLowerCase().trim();
     if(value && value.trim() !== ""){
     const filteredCourses = courses.filter(course =>
       course.Title.toLowerCase().includes(value) ||
