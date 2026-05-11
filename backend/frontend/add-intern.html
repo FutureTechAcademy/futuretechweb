@@ -81,10 +81,10 @@ const API = window.ENV.API_URL;
 document.getElementById("internForm").addEventListener("submit", function(e) {
     e.preventDefault();
 
-    const title = document.getElementById("title").value;
-    const description = document.getElementById("description").value;
-    const techInput = document.getElementById("technologies").value;
-    const duration = document.getElementById("duration").value;
+    const title = document.getElementById("title").value.trim();
+    const description = document.getElementById("description").value.trim();
+    const techInput = document.getElementById("technologies").value.trim();
+    const duration = document.getElementById("duration").value.trim();
     const imageFile = document.getElementById("image").files[0];
 
     // convert string → array

@@ -89,10 +89,10 @@
         document.getElementById("trainerForm").addEventListener("submit", function (e) {
             e.preventDefault();
 
-            const name = document.getElementById("name").value;
-            const role = document.getElementById("role").value;
-            const skillsInput = document.getElementById("skills").value;
-            const experience = document.getElementById("experience").value;
+            const name = document.getElementById("name").value.trim();
+            const role = document.getElementById("role").value.trim();
+            const skillsInput = document.getElementById("skills").value.trim();
+            const experience = document.getElementById("experience").value.trim();
             const photoFile = document.getElementById("photo").files[0];
 
             // Convert skills string to array

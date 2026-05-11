@@ -84,9 +84,9 @@
         document.getElementById("projectForm").addEventListener("submit", function (e) {
             e.preventDefault();
 
-            const title = document.getElementById("title").value;
-            const description = document.getElementById("description").value;
-            const technologiesInput = document.getElementById("technologies").value;
+            const title = document.getElementById("title").value.trim();
+            const description = document.getElementById("description").value.trim();
+            const technologiesInput = document.getElementById("technologies").value.trim();
             const imageFile = document.getElementById("image").files[0];
 
             // Convert technologies string to array
