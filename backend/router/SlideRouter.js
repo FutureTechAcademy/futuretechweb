@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 // Ensure this path matches where you saved the Multer config we just corrected
-const upload = require("../middleware/multer"); 
+const upload = require("../middleware/uploadMiddleware"); 
 const { 
     addSlide, 
     getSlide, 
