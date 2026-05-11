@@ -14,8 +14,7 @@ const internshipRouter = require("./router/InternshipRouter")
 const app = express()
 
 
-const compression = require("compression");
-app.use(compression());
+
 
 const dns = require('dns');
 dns.setDefaultResultOrder('ipv4first');
