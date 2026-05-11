@@ -21,14 +21,14 @@ const app = express()
 // dns.setServers(["1.1.1.1","8.8.8.8"])
 
 // Variable 
-const PORT = process.env.PORT
+const PORT = process.env.PORT || 10000;
 const DB_PATH = process.env.MONGO_URL
 
 
 mongoose.connect(DB_PATH)
     .then(() => {
         console.log("Database Connected")
-        app.listen(PORT, () => {
+        app.listen(PORT,"0.0.0.0", () => {
             console.log(`Server Started Port Number ${PORT}`)
         })
     })
