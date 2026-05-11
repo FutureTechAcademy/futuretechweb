@@ -83,8 +83,8 @@
         document.getElementById("postForm").addEventListener("submit", function (e) {
             e.preventDefault()
 
-            const title = document.getElementById("title").value
-            const description = document.getElementById("description").value
+            const title = document.getElementById("title").value.trim()
+            const description = document.getElementById("description").value.trim()
             const image = document.getElementById("image").files[0]
 
             const formData = new FormData()
