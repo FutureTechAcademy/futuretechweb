@@ -131,4 +131,5 @@ pointer-events: none;
 .arrow:hover {
   background: var(--brand-yellow);
   color: black;
+
 }
