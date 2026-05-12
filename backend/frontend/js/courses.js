@@ -20,18 +20,27 @@ async function loadAllCourse() {
   for (let course of courses) {
 
     const card = `
-      <div class="course-card">
-        <div class="card-img">
-          <img src="${course.Image}" class="img-fluid">
-        </div>
-        <div class="card-content">
-          <h5 style="height:50px;white-space: nowrap;" >${course.Title}</h5>
-          <span>Duration: ${course.Duration}</span>
-          <br>
-          <a href="/course.html?id=${course._id}" class="btn btn-warning mt-2 w-100">View Details</a>
-          <button class="btn btn-primary mt-2 w-100" data-bs-toggle="modal" data-bs-target="#enq">Enroll Now</button>
-        </div>
-      </div>`;
+      <div class="course-card d-flex flex-column">
+  <div class="card-img">
+    <img src="${course.Image}" class="img-fluid">
+  </div>
+
+  <div class="card-content d-flex flex-column flex-grow-1">
+    
+    <!-- TITLE -->
+    <h5 class="course-title">${course.Title}</h5>
+
+    <!-- DURATION -->
+    <span class="mt-auto">Duration: ${course.Duration}</span>
+
+    <!-- BUTTONS -->
+    <a href="/course.html?id=${course._id}" class="btn btn-warning mt-2 w-100">View Details</a>
+    <button class="btn btn-primary mt-2 w-100" data-bs-toggle="modal" data-bs-target="#enq">
+      Enroll Now
+    </button>
+
+  </div>
+</div>`;
 
     if (course.Category === "Trending") {
       str1 += `<div class="col-md-3 reveal-up">${card}</div>`;
