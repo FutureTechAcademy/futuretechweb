@@ -131,6 +131,10 @@ function setupSearch() {
           <div class="card-content">
             <h5 class="course-title">${c.Title}</h5>
             <span>${c.Duration}</span>
+             <a href="/course.html?id=${c._id}" class="btn btn-warning mt-2 w-100">View Details</a>
+        <button class="btn btn-primary mt-2 w-100" data-bs-toggle="modal" data-bs-target="#enq">
+          Enroll Now
+        </button>
           </div>
         </div>
       </div>`;
