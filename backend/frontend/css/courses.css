@@ -100,9 +100,9 @@
   .course-item {
     flex: 0 0 100%;
   }
-  .search-box
+.search-box
 {
-  width:90%;
+  width:50%;
   margin: 10px auto;
 }
 }
@@ -134,8 +134,3 @@
   color: black;
 }
 
-.search-box
-{
-  width:50%;
-  margin: 10px auto;
-}
