@@ -107,7 +107,7 @@ function loadReview() {
       str += `</div>`
       str += str
       document.getElementById("reviewBox").innerHTML = str
-      for (k of document.querySelectorAll(".reviewContainer")) { k.style.animation = `reviewAni ${data.length * 20}s infinite linear 3s` }
+      for (k of document.querySelectorAll(".reviewContainer")) { k.style.animation = `reviewAni ${data.length * 10}s infinite linear 3s` }
 
     })
 }
