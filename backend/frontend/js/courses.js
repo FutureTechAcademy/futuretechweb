@@ -1,78 +1,55 @@
+
 let courses = [];
-let slider; // define globally
+let slider;
+let autoSlide;
 
 document.addEventListener("DOMContentLoaded", async () => {
-  slider = document.getElementById("courseSlider"); // FIX
+  slider = document.getElementById("courseSlider");
 
   try {
     const res = await fetch(window.ENV.API_URL + "/course");
     courses = await res.json();
     loadAllCourse();
-    startAutoScroll(); // 🔥 AUTO SCROLL START
+    startAutoScroll();
   } catch (err) {
-    console.error("Error loading courses:", err);
+    console.error(err);
   }
+
+  setupSearch(); // 🔥 FIX (safe)
 });
 
-async function loadAllCourse() {
-  let str1 = "", str2 = "", str3 = "", str4 = "", str5 = "", str6 = "", str7 = "", str8 = "";
+/* LOAD COURSES */
+function loadAllCourse() {
+  let str1="", str2="", str3="", str4="", str5="", str6="", str7="", str8="";
 
   for (let course of courses) {
 
     const card = `
-      <div class="course-card d-flex flex-column">
-  <div class="card-img">
-    <img src="${course.Image}" class="img-fluid">
-  </div>
+    <div class="course-card">
+      <div class="card-img">
+        <img src="${course.Image}">
+      </div>
 
-  <div class="card-content d-flex flex-column flex-grow-1">
-    
-    <!-- TITLE -->
-    <h5 class="course-title">${course.Title}</h5>
+      <div class="card-content">
+        <h5 class="course-title">${course.Title}</h5>
 
-    <!-- DURATION -->
-    <span class="mt-auto">Duration: ${course.Duration}</span>
+        <span class="mt-auto">Duration: ${course.Duration}</span>
 
-    <!-- BUTTONS -->
-    <a href="/course.html?id=${course._id}" class="btn btn-warning mt-2 w-100">View Details</a>
-    <button class="btn btn-primary mt-2 w-100" data-bs-toggle="modal" data-bs-target="#enq">
-      Enroll Now
-    </button>
+        <a href="/course.html?id=${course._id}" class="btn btn-warning mt-2 w-100">View Details</a>
+        <button class="btn btn-primary mt-2 w-100" data-bs-toggle="modal" data-bs-target="#enq">
+          Enroll Now
+        </button>
+      </div>
+    </div>`;
 
-  </div>
-</div>`;
-
-    if (course.Category === "Trending") {
-      str1 += `<div class="col-md-3 reveal-up">${card}</div>`;
-    }
-
-    if (course.Category === "IT") {
-      str2 += `<div class="course-item reveal-up">${card}</div>`;
-    }
-
-    if (course.Category === "Design") {
-      str3 += `<div class="col-md-3 reveal-up">${card}</div>`;
-    }
-
-    if (course.Category === "Commerce") {
-      str4 += `<div class="col-md-3 reveal-up">${card}</div>`;
-    }
-
-    if (course.Category === "Electrical") {
-      str5 += `<div class="col-md-3 reveal-up">${card}</div>`;
-    }
-
-    if (course.Category === "Mechanical") {
-      str6 += `<div class="col-md-3 reveal-up">${card}</div>`;
-    }
-
-    if (course.Category === "Civil") {
-      str7 += `<div class="col-md-3 reveal-up">${card}</div>`;
-    }
-
-    if (course.Category === "Others") {
-      str8 += `<div class="col-md-3 reveal-up">${card}</div>`;
-    }
+    if (course.Category === "Trending") str1 += `<div class="col-md-3">${card}</div>`;
+    if (course.Category === "IT") str2 += `<div class="course-item">${card}</div>`;
+    if (course.Category === "Design") str3 += `<div class="col-md-3">${card}</div>`;
+    if (course.Category === "Commerce") str4 += `<div class="col-md-3">${card}</div>`;
+    if (course.Category === "Electrical") str5 += `<div class="col-md-3">${card}</div>`;
+    if (course.Category === "Mechanical") str6 += `<div class="col-md-3">${card}</div>`;
+    if (course.Category === "Civil") str7 += `<div class="col-md-3">${card}</div>`;
+    if (course.Category === "Others") str8 += `<div class="col-md-3">${card}</div>`;
   }
 
   document.querySelector("#trending").innerHTML = str1;
@@ -87,40 +64,22 @@ async function loadAllCourse() {
   applyRevealAnimation();
 }
 
-
-
+/* SCROLL */
 function scrollNext() {
-  if (!slider) return;
-
-  const card = slider.querySelector(".course-item");
+  const card = slider?.querySelector(".course-item");
   if (!card) return;
 
-  const cardWidth = card.offsetWidth + 20;
-
-  slider.scrollBy({
-    left: cardWidth,
-    behavior: "smooth"
-  });
+  slider.scrollBy({ left: card.offsetWidth + 20, behavior: "smooth" });
 }
 
 function scrollPrev() {
-  if (!slider) return;
-
-  const card = slider.querySelector(".course-item");
+  const card = slider?.querySelector(".course-item");
   if (!card) return;
 
-  const cardWidth = card.offsetWidth + 20;
-
-  slider.scrollBy({
-    left: -cardWidth,
-    behavior: "smooth"
-  });
+  slider.scrollBy({ left: -(card.offsetWidth + 20), behavior: "smooth" });
 }
 
-
-
-let autoSlide;
-
+/* AUTO SCROLL */
 function startAutoScroll() {
   if (!slider) return;
 
@@ -128,49 +87,50 @@ function startAutoScroll() {
     const card = slider.querySelector(".course-item");
     if (!card) return;
 
-    const cardWidth = card.offsetWidth + 20;
+    const step = card.offsetWidth + 20;
 
     if (slider.scrollLeft + slider.clientWidth >= slider.scrollWidth) {
       slider.scrollTo({ left: 0, behavior: "smooth" });
     } else {
-      slider.scrollBy({ left: cardWidth, behavior: "smooth" });
+      slider.scrollBy({ left: step, behavior: "smooth" });
     }
-  }, 2500); // speed
+  }, 2500);
 }
 
-// Pause on hover
-document.addEventListener("mouseover", (e) => {
-  if (e.target.closest("#courseSlider")) {
-    clearInterval(autoSlide);
-  }
-});
+/* PAUSE ON HOVER */
+slider?.addEventListener("mouseenter", () => clearInterval(autoSlide));
+slider?.addEventListener("mouseleave", startAutoScroll);
 
-document.addEventListener("mouseout", (e) => {
-  if (e.target.closest("#courseSlider")) {
-    startAutoScroll();
-  }
-});
+/* SEARCH */
+function setupSearch() {
+  const search = document.querySelector("#search");
+  if (!search) return;
 
+  search.addEventListener("input", () => {
+    const value = search.value.toLowerCase().trim();
 
-document.querySelector("#search").addEventListener("input", () => {
-  const value = document.querySelector("#search").value.toLowerCase().trim();
+    if (!value) {
+      document.querySelector("#searchResult").innerHTML = "";
+      return;
+    }
 
-  if (value !== "") {
     let str = `<div class="row g-4">`;
 
-    const filtered = courses.filter(course =>
-      course.Title.toLowerCase().includes(value) ||
-      course.Category.toLowerCase().includes(value)
+    const filtered = courses.filter(c =>
+      c.Title.toLowerCase().includes(value) ||
+      c.Category.toLowerCase().includes(value)
     );
 
-    for (let course of filtered) {
+    for (let c of filtered) {
       str += `
       <div class="col-md-3">
         <div class="course-card">
-          <img src="${course.Image}" class="img-fluid">
+          <div class="card-img">
+            <img src="${c.Image}">
+          </div>
           <div class="card-content">
-            <h5>${course.Title}</h5>
-            <span>${course.Duration}</span>
+            <h5 class="course-title">${c.Title}</h5>
+            <span>${c.Duration}</span>
           </div>
         </div>
       </div>`;
@@ -178,26 +138,20 @@ document.querySelector("#search").addEventListener("input", () => {
 
     str += `</div>`;
     document.querySelector("#searchResult").innerHTML = str;
-  } else {
-    document.querySelector("#searchResult").innerHTML = "";
-  }
-});
+  });
+}
 
-
-
+/* FOOTER */
 async function trendingCourse() {
   try {
     const res = await fetch(window.ENV.API_URL + "/course");
     const data = await res.json();
 
-    let str = "";
-
-    data
+    const str = data
       .filter(c => c.Category === "Trending")
       .slice(0, 8)
-      .forEach(c => {
-        str += `<li><a href="/course.html?id=${c._id}">${c.Title}</a></li>`;
-      });
+      .map(c => `<li><a href="/course.html?id=${c._id}">${c.Title}</a></li>`)
+      .join("");
 
     document.querySelector("#footer_TrendingCourse").innerHTML = str;
 
