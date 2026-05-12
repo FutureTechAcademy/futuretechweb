@@ -96,15 +96,21 @@
   flex: 0 0 calc((100% - 60px) / 4);
 }
 
-@media (max-width: 768px) {
-  .course-item {
-    flex: 0 0 100%;
-  }
 .search-box
 {
   width:50%;
   margin: 10px auto;
 }
+
+@media (max-width: 768px) {
+  .course-item {
+    flex: 0 0 100%;
+  }
+  .search-box
+{
+  width:100%;
+}
+
 }
 
 /* ARROWS */
