@@ -1,208 +1,92 @@
+let courses = [];
+let slider; // define globally
 
-let courses = []
 document.addEventListener("DOMContentLoaded", async () => {
-  const res = await fetch(window.ENV.API_URL + "/course")
-  courses = await res.json()
-  loadAllCourse()
+  slider = document.getElementById("courseSlider"); // FIX
+
+  try {
+    const res = await fetch(window.ENV.API_URL + "/course");
+    courses = await res.json();
+    loadAllCourse();
+    startAutoScroll(); // 🔥 AUTO SCROLL START
+  } catch (err) {
+    console.error("Error loading courses:", err);
+  }
 });
 
-
 async function loadAllCourse() {
-  // const res = await fetch(window.ENV.API_URL + "/course")
-  // const courses = await res.json()
-  str1 = "", str2 = "", str3 = "", str4 = "", str5 = "", str6 = "", str7 = "", str8 = ""
+  let str1 = "", str2 = "", str3 = "", str4 = "", str5 = "", str6 = "", str7 = "", str8 = "";
+
   for (let course of courses) {
-    if (course.Category == "Trending") {
-      str1 += ` 
-      <div class="col-md-3 reveal-up">
-        <div class="course-card">
-          <div class="card-img">
-            <img src="${course.Image}" class="img-fluid">
-          </div>
-          <div class="card-content">
-            <h5>${course.Title}</h5>
-            <span>Duration: ${course.Duration}</span>
-            <br>
-            <a href="/course.html?id=${course._id}" class="btn btn-warning mt-2" style="width:100%;background-color:var(--brand-yellow);">View
-              Details</a>
-            <button class="btn btn-primary mt-2"
-              style="width:100%;background-color:var(--brand-blue);"  data-bs-toggle="modal"
-    data-bs-target="#enq">Enroll
-              Now</button>
-          </div>
-        </div>
-      </div>`}
 
-
-    if (course.Category == "IT") {
-      str2 += `
-      <div class="course-item reveal-up">
-        <div class="course-card">
+    const card = `
+      <div class="course-card">
+        <div class="card-img">
           <img src="${course.Image}" class="img-fluid">
-          <div class="card-content">
-            <h5 style="height:60px;">${course.Title}</h5>
-            <span>Duration: ${course.Duration}</span>
-            <a href="/course.html?id=${course._id}" class="btn btn-warning mt-2 w-100">View Details</a>
-            <button class="btn btn-primary mt-2 w-100" data-bs-toggle="modal"
-    data-bs-target="#enq">Enroll Now</button>
-          </div>
         </div>
-      </div>
-            `}
-
-    if (course.Category == "Design") {
-      str3 += ` 
-      <div class="col-md-3 reveal-up">
-        <div class="course-card">
-          <div class="card-img">
-            <img src="${course.Image}" class="img-fluid">
-          </div>
-          <div class="card-content">
-            <h5>${course.Title}</h5>
-            <span>Duration: ${course.Duration}</span>
-            <br>
-            <a href="/course.html?id=${course._id}" class="btn btn-warning mt-2" style="width:100%;background-color:var(--brand-yellow);">View
-              Details</a>
-            <button class="btn btn-primary mt-2"
-              style="width:100%;background-color:var(--brand-blue);" data-bs-toggle="modal"
-    data-bs-target="#enq">Enroll
-              Now</button>
-          </div>
+        <div class="card-content">
+          <h5>${course.Title}</h5>
+          <span>Duration: ${course.Duration}</span>
+          <br>
+          <a href="/course.html?id=${course._id}" class="btn btn-warning mt-2 w-100">View Details</a>
+          <button class="btn btn-primary mt-2 w-100" data-bs-toggle="modal" data-bs-target="#enq">Enroll Now</button>
         </div>
-      </div>`}
+      </div>`;
 
+    if (course.Category === "Trending") {
+      str1 += `<div class="col-md-3 reveal-up">${card}</div>`;
+    }
 
-    if (course.Category == "Commerce") {
-      str4 += ` 
-      <div class="col-md-3 reveal-up">
-        <div class="course-card">
-          <div class="card-img">
-            <img src="${course.Image}" class="img-fluid">
-          </div>
-          <div class="card-content">
-            <h5>${course.Title}</h5>
-            <span>Duration: ${course.Duration}</span>
-            <br>
-            <a href="/course.html?id=${course._id}" class="btn btn-warning mt-2" style="width:100%;background-color:var(--brand-yellow);">View
-              Details</a>
-            <button class="btn btn-primary mt-2"
-              style="width:100%;background-color:var(--brand-blue);" data-bs-toggle="modal"
-    data-bs-target="#enq">Enroll
-              Now</button>
-          </div>
-        </div>
-      </div>`}
+    if (course.Category === "IT") {
+      str2 += `<div class="course-item reveal-up">${card}</div>`;
+    }
 
+    if (course.Category === "Design") {
+      str3 += `<div class="col-md-3 reveal-up">${card}</div>`;
+    }
 
-    if (course.Category == "Electrical") {
-      str5 += ` 
-      <div class="col-md-3 reveal-up">
-        <div class="course-card">
-          <div class="card-img">
-            <img src="${course.Image}" class="img-fluid">
-          </div>
-          <div class="card-content">
-            <h5>${course.Title}</h5>
-            <span>Duration: ${course.Duration}</span>
-            <br>
-            <a href="/course.html?id=${course._id}" class="btn btn-warning mt-2" style="width:100%;background-color:var(--brand-yellow);">View
-              Details</a>
-            <button class="btn btn-primary mt-2"
-              style="width:100%;background-color:var(--brand-blue);" data-bs-toggle="modal"
-    data-bs-target="#enq">Enroll
-              Now</button>
-          </div>
-        </div>
-      </div>`}
+    if (course.Category === "Commerce") {
+      str4 += `<div class="col-md-3 reveal-up">${card}</div>`;
+    }
 
+    if (course.Category === "Electrical") {
+      str5 += `<div class="col-md-3 reveal-up">${card}</div>`;
+    }
 
-    if (course.Category == "Mechanical") {
-      str6 += ` 
-      <div class="col-md-3 reveal-up">
-        <div class="course-card">
-          <div class="card-img">
-            <img src="${course.Image}" class="img-fluid">
-          </div>
-          <div class="card-content">
-            <h5>${course.Title}</h5>
-            <span>Duration: ${course.Duration}</span>
-            <br>
-            <a href="/course.html?id=${course._id}" class="btn btn-warning mt-2" style="width:100%;background-color:var(--brand-yellow);">View
-              Details</a>
-            <button class="btn btn-primary mt-2"
-              style="width:100%;background-color:var(--brand-blue);" data-bs-toggle="modal"
-    data-bs-target="#enq">Enroll
-              Now</button>
-          </div>
-        </div>
-      </div>`}
+    if (course.Category === "Mechanical") {
+      str6 += `<div class="col-md-3 reveal-up">${card}</div>`;
+    }
 
+    if (course.Category === "Civil") {
+      str7 += `<div class="col-md-3 reveal-up">${card}</div>`;
+    }
 
-    if (course.Category == "Civil") {
-      str7 += ` 
-      <div class="col-md-3 reveal-up">
-        <div class="course-card">
-          <div class="card-img">
-            <img src="${course.Image}" class="img-fluid">
-          </div>
-          <div class="card-content">
-            <h5>${course.Title}</h5>
-            <span>Duration: ${course.Duration}</span>
-            <br>
-            <a href="/course.html?id=${course._id}" class="btn btn-warning mt-2" style="width:100%;background-color:var(--brand-yellow);">View
-              Details</a>
-            <button class="btn btn-primary mt-2"
-              style="width:100%;background-color:var(--brand-blue);" data-bs-toggle="modal"
-    data-bs-target="#enq">Enroll
-              Now</button>
-          </div>
-        </div>
-      </div>`}
-
-
-    if (course.Category == "Others") {
-      str8 += ` 
-      <div class="col-md-3 reveal-up">
-        <div class="course-card">
-          <div class="card-img">
-            <img src="${course.Image}" class="img-fluid">
-          </div>
-          <div class="card-content">
-            <h5>${course.Title}</h5>
-            <span>Duration: ${course.Duration}</span>
-            <br>
-            <a href="/course.html?id=${course._id}" class="btn btn-warning mt-2" style="width:100%;background-color:var(--brand-yellow);">View
-              Details</a>
-            <button class="btn btn-primary mt-2"
-              style="width:100%;background-color:var(--brand-blue);" data-bs-toggle="modal"
-    data-bs-target="#enq">Enroll
-              Now</button>
-          </div>
-        </div>
-      </div>`}
-
-
-
+    if (course.Category === "Others") {
+      str8 += `<div class="col-md-3 reveal-up">${card}</div>`;
+    }
   }
-  document.querySelector("#trending").innerHTML = str1
-  document.querySelector("#courseSlider").innerHTML = str2
-  document.querySelector("#design").innerHTML = str3
-  document.querySelector("#commerce").innerHTML = str4
-  document.querySelector("#electrical").innerHTML = str5
-  document.querySelector("#mechanical").innerHTML = str6
-  document.querySelector("#civil").innerHTML = str7
-  document.querySelector("#other").innerHTML = str8
-  applyRevealAnimation()
+
+  document.querySelector("#trending").innerHTML = str1;
+  document.querySelector("#courseSlider").innerHTML = str2;
+  document.querySelector("#design").innerHTML = str3;
+  document.querySelector("#commerce").innerHTML = str4;
+  document.querySelector("#electrical").innerHTML = str5;
+  document.querySelector("#mechanical").innerHTML = str6;
+  document.querySelector("#civil").innerHTML = str7;
+  document.querySelector("#other").innerHTML = str8;
+
+  applyRevealAnimation();
 }
 
 
 
-const slider = document.getElementById("courseSlider");
-
-
 function scrollNext() {
+  if (!slider) return;
+
   const card = slider.querySelector(".course-item");
-  const cardWidth = card.offsetWidth + 20; // 20 = gap
+  if (!card) return;
+
+  const cardWidth = card.offsetWidth + 20;
 
   slider.scrollBy({
     left: cardWidth,
@@ -211,7 +95,11 @@ function scrollNext() {
 }
 
 function scrollPrev() {
+  if (!slider) return;
+
   const card = slider.querySelector(".course-item");
+  if (!card) return;
+
   const cardWidth = card.offsetWidth + 20;
 
   slider.scrollBy({
@@ -221,67 +109,93 @@ function scrollPrev() {
 }
 
 
-document.querySelector("#search")
-  .addEventListener("input", () => {
 
-    const value = document.querySelector("#search").value.toLowerCase().trim();
-    if(value && value.trim() !== ""){
-    const filteredCourses = courses.filter(course =>
+let autoSlide;
+
+function startAutoScroll() {
+  if (!slider) return;
+
+  autoSlide = setInterval(() => {
+    const card = slider.querySelector(".course-item");
+    if (!card) return;
+
+    const cardWidth = card.offsetWidth + 20;
+
+    if (slider.scrollLeft + slider.clientWidth >= slider.scrollWidth) {
+      slider.scrollTo({ left: 0, behavior: "smooth" });
+    } else {
+      slider.scrollBy({ left: cardWidth, behavior: "smooth" });
+    }
+  }, 2500); // speed
+}
+
+// Pause on hover
+document.addEventListener("mouseover", (e) => {
+  if (e.target.closest("#courseSlider")) {
+    clearInterval(autoSlide);
+  }
+});
+
+document.addEventListener("mouseout", (e) => {
+  if (e.target.closest("#courseSlider")) {
+    startAutoScroll();
+  }
+});
+
+
+document.querySelector("#search").addEventListener("input", () => {
+  const value = document.querySelector("#search").value.toLowerCase().trim();
+
+  if (value !== "") {
+    let str = `<div class="row g-4">`;
+
+    const filtered = courses.filter(course =>
       course.Title.toLowerCase().includes(value) ||
       course.Category.toLowerCase().includes(value)
     );
-    str1 = `<div class="row g-4 reveal-up">`
-    
-    for (let course of filteredCourses) {
-      str1 += ` 
-      <div class="col-md-3 reveal-up">
+
+    for (let course of filtered) {
+      str += `
+      <div class="col-md-3">
         <div class="course-card">
-          <div class="card-img">
-            <img src="${course.Image}" class="img-fluid">
-          </div>
+          <img src="${course.Image}" class="img-fluid">
           <div class="card-content">
             <h5>${course.Title}</h5>
-            <span>Duration: ${course.Duration}</span>
-            <br>
-            <a href="/course.html?id=${course._id}" class="btn btn-warning mt-2" style="width:100%;background-color:var(--brand-yellow);">View
-              Details</a>
-            <button class="btn btn-primary mt-2"
-              style="width:100%;background-color:var(--brand-blue);" data-bs-toggle="modal"
-    data-bs-target="#enq">Enroll
-              Now</button>
+            <span>${course.Duration}</span>
           </div>
         </div>
-      </div>`
+      </div>`;
     }
 
-    str1+=`</div>`
-    document.querySelector("#searchResult").innerHTML = str1
-    applyRevealAnimation()}
-    else{
-      document.querySelector("#searchResult").innerHTML = ""
-      applyRevealAnimation()
-    }
-    
-  });
-
-
-
-
-// Trending Courses Show
-async function trendingCourse() {
-  const res = await fetch(window.ENV.API_URL + "/course")
-  const data = await res.json()
-  var str1 = ""
-  var len = (data.length > 8) ? 8 : data.length;
-
-  for (let i = 0; i < len; i++) {
-    if (data[i].Category == "Trending") {
-      str1 += `<li><a href="/course.html?id=${data[i]._id}"><i class="bi bi-arrow-right-circle-fill"></i> ${data[i].Title}</a></li>`
-    }
+    str += `</div>`;
+    document.querySelector("#searchResult").innerHTML = str;
+  } else {
+    document.querySelector("#searchResult").innerHTML = "";
   }
-  document.querySelector("#footer_TrendingCourse").innerHTML = str1
-  applyRevealAnimation()
+});
+
+
+
+async function trendingCourse() {
+  try {
+    const res = await fetch(window.ENV.API_URL + "/course");
+    const data = await res.json();
+
+    let str = "";
+
+    data
+      .filter(c => c.Category === "Trending")
+      .slice(0, 8)
+      .forEach(c => {
+        str += `<li><a href="/course.html?id=${c._id}">${c.Title}</a></li>`;
+      });
+
+    document.querySelector("#footer_TrendingCourse").innerHTML = str;
+
+  } catch (err) {
+    console.error(err);
+  }
 }
 
-trendingCourse()
-applyRevealAnimation()
+trendingCourse();
+applyRevealAnimation();
