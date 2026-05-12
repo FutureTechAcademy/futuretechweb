@@ -25,7 +25,7 @@ async function loadAllCourse() {
           <img src="${course.Image}" class="img-fluid">
         </div>
         <div class="card-content">
-          <h5>${course.Title}</h5>
+          <h4 style="height:80px;" >${course.Title}</h4>
           <span>Duration: ${course.Duration}</span>
           <br>
           <a href="/course.html?id=${course._id}" class="btn btn-warning mt-2 w-100">View Details</a>
