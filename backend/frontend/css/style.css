@@ -167,7 +167,7 @@ video {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(115deg, rgba(7, 57, 117, 0.597), rgba(11, 80, 159, 0.578));
+  background: linear-gradient(115deg, rgba(7, 57, 117, 0.198), rgba(11, 80, 159, 0.153));
 }
 
 .slide-content {
