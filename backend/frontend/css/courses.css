@@ -128,3 +128,9 @@
   background: var(--brand-yellow);
   color: black;
 }
+
+.search-box
+{
+  width:50%;
+  margin: 10px auto;
+}
