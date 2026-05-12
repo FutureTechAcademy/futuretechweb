@@ -100,6 +100,11 @@
   .course-item {
     flex: 0 0 100%;
   }
+  .search-box
+{
+  width:90%;
+  margin: 10px auto;
+}
 }
 
 /* ARROWS */
