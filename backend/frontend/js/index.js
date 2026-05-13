@@ -38,8 +38,11 @@ async function trendingCourse() {
   const data = await res.json()
 
   var str = ""
+  var len = (data.length > 8) ? 8 : data.length;
+  var count = 0;
+
   for (let i = 0; i < data.length; i++) {
- 
+
     if (data[i].Category == "Trending") {
 
       str += `<div class="col-md-6 col-lg-3 reveal-up">
@@ -56,7 +59,10 @@ async function trendingCourse() {
             </div>
           </div>
         </div>`
-    
+      count++
+    }
+    if (len == count) {
+      break;
     }
   }
 
