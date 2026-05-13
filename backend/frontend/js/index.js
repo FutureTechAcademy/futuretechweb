@@ -40,9 +40,9 @@ async function trendingCourse() {
   var str = ""
   var str1 = ""
   var len = (data.length > 8) ? 8 : data.length;
-
+  var count =0;
   for (let i = 0; i < data.length; i++) {
-    console.log(data[i].Category)
+ 
     if (data[i].Category == "Trending") {
 
       str += `<div class="col-md-6 col-lg-3 reveal-up">
@@ -60,8 +60,9 @@ async function trendingCourse() {
           </div>
         </div>`
       str1 += `<li><a href="/course.html?id=${data[i]._id}"><i class="bi bi-arrow-right-circle-fill"></i> ${data[i].Title}</a></li>`
+    count++;
     }
-    if (len == i + 1) {
+    if (len == count) {
       break;
     }
   }
