@@ -77,3 +77,6 @@
   padding: 12px;
 }
 
+.baner > img{
+  width: 100vw;
+}
