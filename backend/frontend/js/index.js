@@ -60,6 +60,7 @@ async function trendingCourse() {
       str1 += `<li><a href="/course.html?id=${data[i]._id}"><i class="bi bi-arrow-right-circle-fill"></i> ${data[i].Title}</a></li>`
     }
   }
+  alert(str)
   document.querySelector("#trendingCourseDiv").innerHTML = str
   document.querySelector("#footer_TrendingCourse").innerHTML = str1
   applyRevealAnimation()
