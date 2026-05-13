@@ -4,10 +4,15 @@ async function trendingCourse() {
   const data = await res.json()
   var str1 = ""
   var len = (data.length > 8) ? 8 : data.length;
+  var count = 0;
 
   for (let i = 0; i < len; i++) {
     if (data[i].Category == "Trending") {
       str1 += `<li><a href="/course.html?id=${data[i]._id}"><i class="bi bi-arrow-right-circle-fill"></i> ${data[i].Title}</a></li>`
+      count++;
+    }
+    if (len == count) {
+      break;
     }
   }
   document.querySelector("#footer_TrendingCourse").innerHTML = str1
