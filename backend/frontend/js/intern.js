@@ -16,7 +16,7 @@ async function loadInternship() {
             <div class="card course-card">
 
                 <!-- Image -->
-                <img src="${pro.Image}" class="card-img-top course-img" alt="Java Course">
+                <img src="${pro.Image}" class="card-img-top course-img" alt="${pro.Title} Internship for college students at future tech academy tenkasi">
 
                 <div class="card-body">
 
@@ -56,22 +56,5 @@ async function loadInternship() {
 }
 
 
-// Trending Courses Show
-async function trendingCourse() {
-    const res = await fetch(window.ENV.API_URL + "/course")
-    const data = await res.json()
-    var str1 = ""
-    var len = (data.length > 8) ? 8 : data.length;
-
-    for (let i = 0; i < len; i++) {
-        if (data[i].Category == "Trending") {
-            str1 += `<li><a href="/course.html?id=${data[i]._id}"><i class="bi bi-arrow-right-circle-fill"></i> ${data[i].Title}</a></li>`
-        }
-    }
-    document.querySelector("#footer_TrendingCourse").innerHTML = str1
-    applyRevealAnimation()
-}
-
-trendingCourse()
 loadInternship()
 applyRevealAnimation()
