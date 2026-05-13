@@ -66,7 +66,7 @@ async function trendingCourse() {
       break;
     }
   }
-
+console.log(str)
   document.querySelector("#trendingCourseDiv").innerHTML = str
   document.querySelector("#footer_TrendingCourse").innerHTML = str1
   applyRevealAnimation()
