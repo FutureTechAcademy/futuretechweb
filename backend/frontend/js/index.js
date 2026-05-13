@@ -36,6 +36,7 @@ async function loadSlide() {
 async function trendingCourse() {
   const res = await fetch(window.ENV.API_URL + "/course")
   const data = await res.json()
+  console.log(data)
   var str = ""
   var str1 = ""
   var len = (data.length > 8) ? 8 : data.length;
@@ -60,7 +61,7 @@ async function trendingCourse() {
       str1 += `<li><a href="/course.html?id=${data[i]._id}"><i class="bi bi-arrow-right-circle-fill"></i> ${data[i].Title}</a></li>`
     }
   }
-  alert(str)
+ 
   document.querySelector("#trendingCourseDiv").innerHTML = str
   document.querySelector("#footer_TrendingCourse").innerHTML = str1
   applyRevealAnimation()
