@@ -38,5 +38,4 @@ async function sendEnq1() {
 
 
 
-trendingCourse()
 applyRevealAnimation()
