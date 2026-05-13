@@ -536,9 +536,7 @@ p {
 }
 
 @media (max-width: 767px) {
-  *{
-    text-align: justify;
-  }
+ 
   .detail-hero-image {
     height: 220px;
   }
