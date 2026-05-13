@@ -45,7 +45,7 @@ async function trendingCourse() {
     if (data[i].Category == "Trending") {
       str += `<div class="col-md-6 col-lg-3 reveal-up">
           <div class="info-card card">
-             <img src="${data[i].Image}" class="card-img-top card-img-fixed" >
+             <img src="${data[i].Image}" alt="${data[i].Title}" class="card-img-top card-img-fixed" >
             <div class="card-body">
               <p style="font-size:0.8rem;" >${data[i].Category}</p>
               <h5 class="card-title" style="height:50px;">${data[i].Title}</h5>
