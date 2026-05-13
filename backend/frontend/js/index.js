@@ -36,15 +36,15 @@ async function loadSlide() {
 async function trendingCourse() {
   const res = await fetch(window.ENV.API_URL + "/course")
   const data = await res.json()
-  
+
   var str = ""
   var str1 = ""
   var len = (data.length > 8) ? 8 : data.length;
-
+  console.log(len)
   for (let i = 0; i < len; i++) {
-
+    console.log(data[i].Category)
     if (data[i].Category == "Trending") {
-console.log(str)
+
       str += `<div class="col-md-6 col-lg-3 reveal-up">
           <div class="info-card card">
              <img src="${data[i].Image}" alt="${data[i].Title}" class="card-img-top card-img-fixed" >
@@ -62,7 +62,7 @@ console.log(str)
       str1 += `<li><a href="/course.html?id=${data[i]._id}"><i class="bi bi-arrow-right-circle-fill"></i> ${data[i].Title}</a></li>`
     }
   }
- 
+
   document.querySelector("#trendingCourseDiv").innerHTML = str
   document.querySelector("#footer_TrendingCourse").innerHTML = str1
   applyRevealAnimation()
