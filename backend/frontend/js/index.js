@@ -36,7 +36,7 @@ async function loadSlide() {
 async function trendingCourse() {
   const res = await fetch(window.ENV.API_URL + "/course")
   const data = await res.json()
-  console.log(data)
+  
   var str = ""
   var str1 = ""
   var len = (data.length > 8) ? 8 : data.length;
@@ -44,6 +44,7 @@ async function trendingCourse() {
   for (let i = 0; i < len; i++) {
 
     if (data[i].Category == "Trending") {
+console.log(str)
       str += `<div class="col-md-6 col-lg-3 reveal-up">
           <div class="info-card card">
              <img src="${data[i].Image}" alt="${data[i].Title}" class="card-img-top card-img-fixed" >
