@@ -27,7 +27,7 @@ function loadAllCourse() {
     const card = `
     <div class="course-card">
       <div class="card-img">
-        <img src="${course.Image}">
+        <img src="${course.Image}" alt="${course.Title} at Future Tech Academy Tenkasi">
       </div>
 
       <div class="card-content">
@@ -126,7 +126,7 @@ function setupSearch() {
       <div class="col-md-3">
         <div class="course-card">
           <div class="card-img">
-            <img src="${c.Image}">
+            <img src="${c.Image}" alt="${c.Title} at Future Tech Academy Tenkasi">
           </div>
           <div class="card-content">
             <h5 class="course-title">${c.Title}</h5>
@@ -145,24 +145,7 @@ function setupSearch() {
   });
 }
 
-/* FOOTER */
-async function trendingCourse() {
-  try {
-    const res = await fetch(window.ENV.API_URL + "/course");
-    const data = await res.json();
 
-    const str = data
-      .filter(c => c.Category === "Trending")
-      .slice(0, 8)
-      .map(c => `<li><a href="/course.html?id=${c._id}">${c.Title}</a></li>`)
-      .join("");
 
-    document.querySelector("#footer_TrendingCourse").innerHTML = str;
 
-  } catch (err) {
-    console.error(err);
-  }
-}
-
-trendingCourse();
 applyRevealAnimation();
