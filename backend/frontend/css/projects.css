@@ -7,3 +7,23 @@
    display: inline-block;
    color:white;
  }
+
+ .project-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.project-card .card-body {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.project-card .card-text {
+  flex-grow: 1; /* This pushes button down */
+}
+
+.project-card .btn {
+  margin-top: auto; /* Push button to bottom */
+}
