@@ -90,4 +90,5 @@ async function loadInternship() {
 // Run on page load
 document.addEventListener("DOMContentLoaded", () => {
     loadInternship();
+    applyRevealAnimation()
 });
