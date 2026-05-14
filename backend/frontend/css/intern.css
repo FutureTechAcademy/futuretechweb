@@ -1,3 +1,7 @@
+/* Make all cards equal height */
+#intern .col-md-3 {
+    display: flex;
+}
 
 /* Card Styling */
 .course-card {
@@ -7,6 +11,11 @@
     transition: 0.4s ease;
     box-shadow: 0 10px 30px rgba(0,0,0,0.3);
     background: #fff;
+
+    /* IMPORTANT */
+    display: flex;
+    flex-direction: column;
+    width: 100%;
 }
 
 /* Hover Effect */
@@ -17,8 +26,15 @@
 
 /* Image Styling */
 .course-img {
-    height: 120px;
+    height: 140px;
     object-fit: cover;
+}
+
+/* Card Body Flex Layout */
+.course-card .card-body {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 /* Title */
@@ -30,53 +46,74 @@
 
 /* Description */
 .course-desc {
-    font-size: 11px;
+    font-size: 12px;
     color: #555;
+
+    /* KEY LINE → pushes button down */
+    flex-grow: 1;
 }
 
 /* Badge Styling */
 .tech-badge {
-    background: linear-gradient(45deg, var(--brand-blue-dark),#046ef0);
+    background: linear-gradient(45deg, var(--brand-blue-dark), #046ef0);
     color: #fff;
     padding: 6px 10px;
     border-radius: 20px;
-    font-size: 8px;
+    font-size: 9px;
     margin: 3px;
     display: inline-block;
 }
 
 /* Duration */
 .duration {
-       font-size: 12px;
+    font-size: 12px;
     font-weight: 600;
     color: #198754;
 }
 
-/* Button */
-.enroll-btn {
-    font-size: 16px;
-    border-radius: 30px;
-    transition: 0.3s;
+/* Button container → push bottom */
+.card-body .d-grid {
+    margin-top: auto;
 }
 
-.enroll-btn:hover {
+/* Button */
+.btn-brand {
+    font-size: 14px;
+    border-radius: 30px;
+    transition: 0.3s;
+    padding: 8px;
+}
+
+.btn-brand:hover {
     background-color: var(--brand-blue-dark);
     color: #fff;
 }
 
-
-
-
+/* Icon Card */
 .custom-icon {
-  margin: 0 auto;
-   width: 80px;
-   height: 80px;
-   background-color: var(--brand-blue-dark);
-   border-radius: 50%;
-   font-size: 3rem;
-   display: flex;
-   justify-content: center;
-   align-items: center;
- }
+    margin: 0 auto;
+    width: 80px;
+    height: 80px;
+    background-color: var(--brand-blue-dark);
+    border-radius: 50%;
+    font-size: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
+/* 🔥 Optional: Smooth animation */
+.course-card {
+    animation: fadeInUp 0.6s ease;
+}
 
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
