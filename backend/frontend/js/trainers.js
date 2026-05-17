@@ -11,7 +11,7 @@ async function loadTrainer() {
         }
      
 
-        str1 += `<div class="col-md-4 reveal-up">
+        str1 += `<div class="col-md-4">
              <div class="trainer-card ">
 
           <!-- Photo -->
