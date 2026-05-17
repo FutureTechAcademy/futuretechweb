@@ -49,4 +49,4 @@ async function loadTrainer() {
 
 
 loadTrainer()
-applyRevealAnimation()
+// applyRevealAnimation()
