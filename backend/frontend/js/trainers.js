@@ -43,10 +43,10 @@ async function loadTrainer() {
 
     }
     document.querySelector("#traBox").innerHTML=str1
-    
+    applyRevealAnimation()
 }
 
 
 
 loadTrainer()
-// applyRevealAnimation()
+applyRevealAnimation()

@@ -32,7 +32,7 @@ function applyRevealAnimation() {
   const elements = document.querySelectorAll('.reveal-up, .reveal-left, .reveal-right');
 
   elements.forEach((node, idx) => {
-    node.style.transitionDelay = `${Math.min(idx * 0.06, 0.35)}s`;
+    node.style.transitionDelay = `${Math.min(idx * 0.02, 0.15)}s`;
     revealObserver.observe(node);
   });
 }
