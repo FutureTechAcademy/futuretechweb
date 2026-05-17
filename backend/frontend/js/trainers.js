@@ -12,7 +12,7 @@ async function loadTrainer() {
      
 
         str1 += `<div class="col-md-4">
-             <div class="trainer-card ">
+             <div class="trainer-card reveal-up">
 
           <!-- Photo -->
           <img src="${tra.Photo}" class="trainer-img" alt="${tra.Name} Trainer At Future Tech Academy Tenkasi">
@@ -43,9 +43,11 @@ async function loadTrainer() {
 
     }
     document.querySelector("#traBox").innerHTML=str1
+    applyRevealAnimation() 
    
 }
 
 
 
 loadTrainer()
+applyRevealAnimation() 
