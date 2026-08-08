@@ -5,7 +5,7 @@ async function loadEvents() {
     var str1 = ""
     for (let evt of data) {
         str1 += `
-        <div class="col-md-6 col-lg-4 reveal-up">
+        <div class="col-md-6 col-lg-4">
           <div class="blog-card card">
             <img src="${evt.Image}"
               class="blog-image" alt="${evt.Title} At Future Tech Academy Tenkasi" />
