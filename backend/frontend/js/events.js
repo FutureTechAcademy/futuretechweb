@@ -18,9 +18,9 @@ async function loadEvents() {
     }
 
     document.querySelector("#evtBox").innerHTML = str1
-    applyRevealAnimation()
+    // applyRevealAnimation()
 }
 
 
 loadEvents()
-applyRevealAnimation()
+// applyRevealAnimation()
