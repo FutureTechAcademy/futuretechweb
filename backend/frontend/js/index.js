@@ -10,7 +10,7 @@ async function loadSlide() {
   for (let i = data.length-1; i >=0; i--) {
 
     str1 += `<button type="button" data-bs-target="#homeSlider" data-bs-slide-to="${i}" class="${i == 0 ? "active" : ""}"></button>`
-    str2 += `<div class="carousel-item ${i == 0 ? 'active' : ''}">
+    str2 += `<div class="carousel-item ${i == (data.length-1) ? 'active' : ''}">
           <div class="slide-cover"
             style="background-image: url('${data[i].Image}');">
             <div class="container">
