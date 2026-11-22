@@ -7,7 +7,7 @@ async function loadSlide() {
   const data = await res.json()
   var str1 = ""
   var str2 = ""
-  for (let i = 0; i < data.length; i++) {
+  for (let i = data.length; i >=0; i--) {
 
     str1 += `<button type="button" data-bs-target="#homeSlider" data-bs-slide-to="${i}" class="${i == 0 ? "active" : ""}"></button>`
     str2 += `<div class="carousel-item ${i == 0 ? 'active' : ''}">
